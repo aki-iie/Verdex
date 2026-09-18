@@ -450,6 +450,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
 /* ── 챕터 밴드 : 탭 바 아래 얇은 사진 띠 (개요를 뺀 회사소개 페이지) ── */
 .chapband{position:relative;overflow:hidden;background:#05101B;
+  box-shadow:inset 0 -2px 0 rgba(127,209,168,.55);
   height:clamp(148px,21vh,230px);display:flex;align-items:flex-end}
 .chapband img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 58%}
 .chapband .cb-veil{position:absolute;inset:0;background:linear-gradient(100deg,
@@ -593,7 +594,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
   .scrollcue{display:none}
 }
 
-  .screen.about{min-height:calc(100svh - var(--hh) - 64px);scroll-snap-align:none}
+  .screen.about{min-height:clamp(460px,calc(100svh - var(--hh) - 300px),820px);scroll-snap-align:none}
   .about .stage{padding:clamp(18px,3.4vh,44px) 0 clamp(20px,4vh,48px)}
   .about .close{top:clamp(10px,1.4vw,28px)}
   @media (max-width:900px){ .screen.about{min-height:0} .about .stage{padding-block:34px 40px} }
@@ -663,6 +664,27 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
   <div class="wrap">
     <span class="sb-title">회사 소개</span>
     <div class="subtabs"><a href="./about-overview.html" class="active">개요</a><a href="./about-leadership.html">리더십</a><a href="./about-history.html">연혁</a><a href="./location.html">오시는 길</a></div>
+  </div>
+</div>
+<div class="chapband">
+  <img src="images/about-solar.jpg" alt="">
+  <div class="cb-veil"></div>
+  <svg class="cb-vein" viewBox="0 0 1200 240" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+    <g stroke="#7FD1A8" fill="none" stroke-linecap="round" opacity=".55">
+      <path d="M1250,206 C1150,196 1060,180 962,156" stroke-width="1.7"/>
+      <path d="M1136,188 C1130,156 1136,128 1150,100" stroke-width="1.2"/>
+      <path d="M1052,172 C1046,144 1052,120 1064,96" stroke-width="1.2"/>
+      <path d="M972,158 C966,134 972,112 982,92" stroke-width="1.1"/>
+      <path d="M1094,180 C1104,192 1116,202 1132,210" stroke-width="1"/>
+    </g>
+    <g fill="#CDF5DC" opacity=".85">
+      <circle cx="1150" cy="99" r="3.2"/><circle cx="1064" cy="95" r="3.2"/>
+      <circle cx="982" cy="91" r="2.7"/><circle cx="1132" cy="210" r="2.4"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">Company Overview</div>
+    <h1>개요</h1>
   </div>
 </div>
 <main>

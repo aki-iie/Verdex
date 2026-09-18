@@ -72,7 +72,7 @@ def hero_photo(f, m):
   {img}<div class="veil"></div>{slot}
   <div class="wrap">
     {eyebrow}
-    <h1>{m["h1"]}</h1>
+    <h1>{BAND_TITLE.get(f, re.sub("<.*?>","",m["h1"]))}</h1>
     {lede}
     {subtabs_html(m["subtabs"])}
   </div>
@@ -88,7 +88,7 @@ def hero_band(f, m):
     return f'''<section class="bhero" data-theme="dark">
   <div class="wrap">
     {top}
-    <h1>{m["h1"]}</h1>
+    <h1>{BAND_TITLE.get(f, re.sub("<.*?>","",m["h1"]))}</h1>
     {lede}{by}{upd}
     {subtabs_html(m["subtabs"])}
   </div>
@@ -102,8 +102,6 @@ def hero_subbar(f, m):
     {subtabs_html(m["subtabs"])}
   </div>
 </div>'''
-    if f == "about-overview.html":
-        return bar
     return bar + f'''
 <div class="chapband">
   <img src="images/about-solar.jpg" alt="">
@@ -123,11 +121,12 @@ def hero_subbar(f, m):
   </svg>
   <div class="wrap">
     <div class="eyebrow">{m["eyebrow"]}</div>
-    <h1>{m["h1"]}</h1>
+    <h1>{BAND_TITLE.get(f, re.sub("<.*?>","",m["h1"]))}</h1>
   </div>
 </div>'''
 
 SUBBAR = {"about-overview.html", "about-leadership.html", "about-history.html", "location.html"}
+BAND_TITLE = {"about-overview.html": "개요"}
 SEC_LABEL = {"about":"회사 소개","business":"사업 분야","news":"뉴스룸","resources":"자료","careers":"채용","contact":"문의"}
 
 
@@ -257,7 +256,7 @@ LEADER_CSS = """
 """
 
 ABOUT_CSS = """
-  .screen.about{min-height:calc(100svh - var(--hh) - 64px);scroll-snap-align:none}
+  .screen.about{min-height:clamp(460px,calc(100svh - var(--hh) - 300px),820px);scroll-snap-align:none}
   .about .stage{padding:clamp(18px,3.4vh,44px) 0 clamp(20px,4vh,48px)}
   .about .close{top:clamp(10px,1.4vw,28px)}
   @media (max-width:900px){ .screen.about{min-height:0} .about .stage{padding-block:34px 40px} }
