@@ -1,0 +1,7 @@
+# macOS
+.DS_Store
+
+# 작업 중 만든 임시 백업 (git 이 대신하므로 커밋하지 않음)
+shell.bak*/
+*.bak
+__pycache__/
