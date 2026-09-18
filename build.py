@@ -212,28 +212,30 @@ LOC_CSS = """
 LEADER_CSS = """
   /* 인사말 첫 화면: 사진·인용문·여백에 vh 상한을 걸어 서명까지 한 화면에.
      본문 글자 크기(var(--fs-body))는 그대로 두고 줄간격·여백만 조인다. */
-  .lead{background:var(--paper);padding-block:min(3.2vh,40px) min(3.6vh,48px)}
-  .lead-grid{display:grid;grid-template-columns:min(34vh,330px) 1fr;
-    gap:clamp(26px,3.4vw,64px);align-items:start;max-width:none}
+  .lead{background:var(--paper);padding:min(2.8vh,36px) 0;
+    height:calc(100svh - var(--hh) - var(--sbh));display:flex;align-items:center}
+  .lead-grid{display:grid;grid-template-columns:min(30vh,300px) 1fr;
+    gap:clamp(24px,3.2vw,60px);align-items:start;max-width:none;width:100%}
   .portrait{margin:0}
   .portrait img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 22%;
-    border-radius:6px;box-shadow:0 30px 58px -34px rgba(10,58,99,.5)}
-  .portrait figcaption{margin-top:min(1.8vh,20px)}
-  .p-name{font-size:min(clamp(20px,1.9vw,34px),3.4vh);font-weight:900;letter-spacing:-.03em;
+    border-radius:6px;box-shadow:0 28px 54px -34px rgba(10,58,99,.5)}
+  .portrait figcaption{margin-top:min(1.6vh,18px)}
+  .p-name{font-size:min(clamp(19px,1.8vw,32px),3.2vh);font-weight:900;letter-spacing:-.03em;
     color:var(--navy);line-height:1.2}
-  .p-role{margin-top:6px;font-family:var(--mono);font-size:var(--fs-small);
+  .p-role{margin-top:5px;font-family:var(--mono);font-size:min(var(--fs-small),1.7vh);
     letter-spacing:.14em;font-weight:500;color:var(--brand)}
-  .say blockquote{margin:min(1.4vh,16px) 0 0;font-size:min(clamp(19px,1.85vw,32px),3.5vh);
-    font-weight:800;line-height:1.45;letter-spacing:-.03em;color:var(--navy);text-wrap:balance}
-  .say p{margin-top:min(1.5vh,18px);max-width:64ch;font-size:var(--fs-body);
-    line-height:1.82;color:var(--muted)}
-  .sign{margin-top:min(2.2vh,26px);padding-top:min(1.8vh,22px);border-top:1px solid var(--line);
-    display:flex;align-items:flex-end;gap:clamp(16px,2vw,32px);flex-wrap:wrap}
-  .sign-slot{width:min(clamp(118px,11vw,168px),22vh);aspect-ratio:12/5;border:1.5px dashed #C3CDC2;
+  .say .eyebrow{font-size:min(var(--fs-eyebrow),1.7vh)}
+  .say blockquote{margin:min(1.2vh,14px) 0 0;font-size:min(clamp(18px,1.8vw,32px),3.3vh);
+    font-weight:800;line-height:1.42;letter-spacing:-.03em;color:var(--navy);text-wrap:balance}
+  .say p{margin-top:min(1.3vh,16px);max-width:64ch;font-size:var(--fs-body);
+    line-height:1.76;color:var(--muted)}
+  .sign{margin-top:min(1.9vh,24px);padding-top:min(1.5vh,20px);border-top:1px solid var(--line);
+    display:flex;align-items:flex-end;gap:clamp(14px,1.8vw,30px);flex-wrap:wrap}
+  .sign-slot{width:min(clamp(110px,10.5vw,160px),19vh);aspect-ratio:12/5;border:1.5px dashed #C3CDC2;
     border-radius:4px;background:#F1F4F0;display:grid;place-items:center;
-    font-size:var(--fs-small);color:#8C9A8E}
-  .sign-who{display:flex;flex-direction:column;gap:3px;font-size:var(--fs-small);color:var(--muted)}
-  .sign-who b{font-size:min(var(--fs-h3),2.6vh);font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+    font-size:min(var(--fs-small),1.7vh);color:#8C9A8E}
+  .sign-who{display:flex;flex-direction:column;gap:2px;font-size:min(var(--fs-small),1.7vh);color:var(--muted)}
+  .sign-who b{font-size:min(var(--fs-h3),2.4vh);font-weight:800;letter-spacing:-.02em;color:var(--ink)}
   .career{padding-block:clamp(44px,5.2vw,104px)}
   .career-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.2vw,40px);
     margin-top:clamp(28px,3.2vw,56px)}
@@ -243,8 +245,9 @@ LEADER_CSS = """
   .career-link{display:inline-block;margin-top:clamp(26px,2.8vw,44px);font-family:var(--mono);
     font-size:var(--fs-small);font-weight:700;letter-spacing:.05em;color:var(--brand)}
   @media (max-width:900px){
-    .lead-grid{grid-template-columns:1fr;gap:26px}
-    .portrait img{max-width:400px}
+    .lead{height:auto;display:block;padding-block:34px 40px}
+    .lead-grid{grid-template-columns:1fr;gap:24px}
+    .portrait img{max-width:360px}
     .say blockquote{font-size:clamp(21px,5.2vw,30px)}
     .career-grid{grid-template-columns:repeat(2,1fr)}
   }
