@@ -20,6 +20,7 @@
   --brand:#2E8B3A; --brand-lift:#4FA35F; --cta:#3A6B46; --cta-hover:#2C5436;
   --ink:#0B1F23;   --muted:#56655A; --line:#E2E8EC; --paper:#F2F6F8;
   --hh:clamp(62px,4.4vw,104px);
+  --sbh:clamp(52px,4.4vw,64px);
   --gutter:clamp(20px,4.2vw,112px);
   --maxw:min(90vw,1800px);
   --u:clamp(7px,0.55vw,15px);
@@ -434,11 +435,11 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
 
 /* ── 섹션 서브바 : 로고 바로 아래 고정 탭 (챕터 색상 띠) ───────────── */
-.subbar{margin-top:var(--hh);position:sticky;top:var(--hh);z-index:50;overflow:hidden;
+.subbar{margin-top:var(--hh);position:sticky;top:var(--hh);z-index:50;overflow:hidden;height:var(--sbh);
   background:var(--navy);border-bottom:1px solid rgba(255,255,255,.13)}
 .subbar .sb-vein{position:absolute;right:0;top:0;height:100%;width:min(320px,36%);pointer-events:none}
-.subbar .wrap{position:relative;z-index:1;max-width:none;display:flex;align-items:center;
-  gap:clamp(14px,3vw,48px);padding-block:clamp(10px,1vw,16px)}
+.subbar .wrap{position:relative;z-index:1;max-width:none;height:100%;display:flex;align-items:center;
+  gap:clamp(14px,3vw,48px)}
 .sb-title{font-size:var(--fs-h3);font-weight:800;letter-spacing:-.02em;color:#fff;white-space:nowrap}
 .subbar .subtabs{margin:0;display:flex;flex-wrap:wrap;gap:clamp(6px,.8vw,12px)}
 .subbar .subtabs a{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);
@@ -447,7 +448,8 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
   transition:background-color .25s,color .25s,border-color .25s}
 .subbar .subtabs a:hover{border-color:var(--mint);color:#fff;background:rgba(127,209,168,.16)}
 .subbar .subtabs a.active{background:var(--mint);border-color:var(--mint);color:var(--navy)}
-@media (max-width:700px){ .subbar .wrap{flex-direction:column;align-items:flex-start;gap:10px}
+@media (max-width:700px){ :root{--sbh:96px}
+  .subbar .wrap{flex-direction:column;align-items:flex-start;justify-content:center;gap:9px}
   .subbar .sb-vein{display:none} }
 
 </style>

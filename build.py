@@ -244,10 +244,25 @@ LEADER_CSS = """
 """
 
 ABOUT_CSS = """
-  .screen.about{min-height:calc(100svh - var(--hh) - 58px);scroll-snap-align:none}
-  .about .stage{padding:clamp(18px,3.4vh,44px) 0 clamp(20px,4vh,48px)}
-  .about .close{top:clamp(10px,1.4vw,28px)}
-  @media (max-width:900px){ .screen.about{min-height:0} .about .stage{padding-block:34px 40px} }
+  /* 개요 화면: 어떤 창 크기에서도 헤더+탭바를 뺀 나머지에 정확히 들어가도록
+     세로를 먹는 값마다 vh 상한을 건다 (min(기존값, N vh)) */
+  .screen.about{height:calc(100svh - var(--hh) - var(--sbh));min-height:0;scroll-snap-align:none}
+  .about.open{height:auto;min-height:calc(100svh - var(--hh) - var(--sbh))}
+  .about .stage{padding:min(3vh,34px) 0 min(3.4vh,40px);gap:min(2.2vh,26px)}
+  .about .intro{padding-bottom:min(1.4vh,16px)}
+  .about .mark{width:min(clamp(44px,4.6vw,92px),8.6vh)}
+  .about .mark img{width:62%;height:auto}
+  .about h2{margin-top:min(2.4vh,26px);font-size:min(clamp(24px,3.9vw,74px),6.4vh)}
+  .about .lede{margin-top:min(1.8vh,20px);font-size:min(clamp(13px,1.22vw,22px),2.1vh);line-height:1.78}
+  .about .cell{min-height:min(clamp(84px,9.4vw,186px),16vh);padding-block:min(1.8vh,22px)}
+  .about .cell b{font-size:min(clamp(18px,2.35vw,44px),4.6vh)}
+  .about .hint{padding-top:min(1.6vh,18px);font-size:min(clamp(12px,1.02vw,18px),1.8vh)}
+  .about .panels{min-height:0;padding-top:min(2.4vh,28px)}
+  @media (max-width:900px){
+    .screen.about{height:auto;min-height:calc(100svh - var(--hh) - var(--sbh))}
+    .about .stage{padding-block:30px 36px;gap:18px}
+    .about .cell{min-height:64px}
+  }
 """
 
 # ── 본문 보정 ──────────────────────────────────────────────────────────────

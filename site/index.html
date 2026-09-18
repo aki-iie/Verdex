@@ -20,6 +20,7 @@
   --brand:#2E8B3A; --brand-lift:#4FA35F; --cta:#3A6B46; --cta-hover:#2C5436;
   --ink:#0B1F23;   --muted:#56655A; --line:#E2E8EC; --paper:#F2F6F8;
   --hh:clamp(62px,4.4vw,104px);
+  --sbh:clamp(52px,4.4vw,64px);
   --gutter:clamp(20px,4.2vw,112px);
   --maxw:min(90vw,1800px);
   --u:clamp(7px,0.55vw,15px);
@@ -434,11 +435,11 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
 
 /* ── 섹션 서브바 : 로고 바로 아래 고정 탭 (챕터 색상 띠) ───────────── */
-.subbar{margin-top:var(--hh);position:sticky;top:var(--hh);z-index:50;overflow:hidden;
+.subbar{margin-top:var(--hh);position:sticky;top:var(--hh);z-index:50;overflow:hidden;height:var(--sbh);
   background:var(--navy);border-bottom:1px solid rgba(255,255,255,.13)}
 .subbar .sb-vein{position:absolute;right:0;top:0;height:100%;width:min(320px,36%);pointer-events:none}
-.subbar .wrap{position:relative;z-index:1;max-width:none;display:flex;align-items:center;
-  gap:clamp(14px,3vw,48px);padding-block:clamp(10px,1vw,16px)}
+.subbar .wrap{position:relative;z-index:1;max-width:none;height:100%;display:flex;align-items:center;
+  gap:clamp(14px,3vw,48px)}
 .sb-title{font-size:var(--fs-h3);font-weight:800;letter-spacing:-.02em;color:#fff;white-space:nowrap}
 .subbar .subtabs{margin:0;display:flex;flex-wrap:wrap;gap:clamp(6px,.8vw,12px)}
 .subbar .subtabs a{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);
@@ -447,7 +448,8 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
   transition:background-color .25s,color .25s,border-color .25s}
 .subbar .subtabs a:hover{border-color:var(--mint);color:#fff;background:rgba(127,209,168,.16)}
 .subbar .subtabs a.active{background:var(--mint);border-color:var(--mint);color:var(--navy)}
-@media (max-width:700px){ .subbar .wrap{flex-direction:column;align-items:flex-start;gap:10px}
+@media (max-width:700px){ :root{--sbh:96px}
+  .subbar .wrap{flex-direction:column;align-items:flex-start;justify-content:center;gap:9px}
   .subbar .sb-vein{display:none} }
 
 @media (min-width:900px) and (min-height:640px){ html{scroll-snap-type:y proximity} }
@@ -664,25 +666,25 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
       </defs>
       <ellipse cx="929" cy="355" rx="340" ry="300" fill="url(#wash)" style="mix-blend-mode:screen"/>
       <g filter="url(#gl)" stroke="url(#vg)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path class="b1" d="M931.3,367.9 L275.9,460.0" stroke-width="2.4"/>
-        <path class="b2" d="M929.8,354.6 L1076.9,24.6" stroke-width="2.4"/>
-        <path class="b3" d="M930.5,353.9 L1075.8,661.3" stroke-width="2.4"/>
-        <path class="b4" d="M929.4,354.4 L891.4,390.8 L864.2,662.8" stroke-width="1.9"/>
+        <path class="b1" d="M931.3,367.9 L289.0,458.2" stroke-width="2.4"/>
+        <path class="b2" d="M929.8,354.6 L1073.2,32.9" stroke-width="2.4"/>
+        <path class="b3" d="M930.5,353.9 L1072.2,653.6" stroke-width="2.4"/>
+        <path class="b4" d="M891.4,390.8 L864.2,662.8" stroke-width="1.9"/>
         <circle class="ring" cx="929.4" cy="354.4" r="27" stroke-width="1.6"/>
-        <path class="b5" d="M1016.2,309.5 L1024.5,248.0" stroke-width="1.5"/>
-        <path class="b5" d="M1016.2,309.5 L963.4,339.0" stroke-width="1.5"/>
-        <path class="b6" d="M1016.2,309.5 L1059.2,356.2" stroke-width="1.5"/>
-        <path class="b6" d="M1016.2,309.5 L1014.2,431.5" stroke-width="1.3"/>
+        <path class="b5" d="M1016.2,309.5 L1023.3,256.6" stroke-width="1.5"/>
+        <path class="b5" d="M1016.2,309.5 L971.3,334.6" stroke-width="1.5"/>
+        <path class="b6" d="M1016.2,309.5 L1051.5,347.7" stroke-width="1.5"/>
+        <path class="b6" d="M1016.2,309.5 L1014.3,425.4" stroke-width="1.3"/>
         <circle class="ring2" cx="1016.2" cy="309.5" r="10.5" stroke-width="1.3"/>
       </g>
       <g fill="#CDF5DC" filter="url(#gl)">
-        <circle class="node" cx="275.9" cy="460" r="5"/>
-        <circle class="node" cx="1076.9" cy="24.6" r="5"/>
+        <circle class="node" cx="289" cy="458.2" r="5"/>
+        <circle class="node" cx="1073.2" cy="32.9" r="5"/>
         <circle class="node" cx="929.4" cy="354.4" r="4"/>
         <circle class="node" cx="1016.2" cy="309.5" r="3"/>
-        <circle class="node" cx="1024.5" cy="248" r="2.6"/>
-        <circle class="node" cx="963.4" cy="339" r="2.6"/>
-        <circle class="node" cx="1059.2" cy="356.2" r="2.6"/>
+        <circle class="node" cx="1023.3" cy="256.6" r="2.6"/>
+        <circle class="node" cx="971.3" cy="334.6" r="2.6"/>
+        <circle class="node" cx="1051.5" cy="347.7" r="2.6"/>
       </g>
       </svg>
   </div>

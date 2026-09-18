@@ -20,6 +20,7 @@
   --brand:#2E8B3A; --brand-lift:#4FA35F; --cta:#3A6B46; --cta-hover:#2C5436;
   --ink:#0B1F23;   --muted:#56655A; --line:#E2E8EC; --paper:#F2F6F8;
   --hh:clamp(62px,4.4vw,104px);
+  --sbh:clamp(52px,4.4vw,64px);
   --gutter:clamp(20px,4.2vw,112px);
   --maxw:min(90vw,1800px);
   --u:clamp(7px,0.55vw,15px);
@@ -434,11 +435,11 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
 
 /* ── 섹션 서브바 : 로고 바로 아래 고정 탭 (챕터 색상 띠) ───────────── */
-.subbar{margin-top:var(--hh);position:sticky;top:var(--hh);z-index:50;overflow:hidden;
+.subbar{margin-top:var(--hh);position:sticky;top:var(--hh);z-index:50;overflow:hidden;height:var(--sbh);
   background:var(--navy);border-bottom:1px solid rgba(255,255,255,.13)}
 .subbar .sb-vein{position:absolute;right:0;top:0;height:100%;width:min(320px,36%);pointer-events:none}
-.subbar .wrap{position:relative;z-index:1;max-width:none;display:flex;align-items:center;
-  gap:clamp(14px,3vw,48px);padding-block:clamp(10px,1vw,16px)}
+.subbar .wrap{position:relative;z-index:1;max-width:none;height:100%;display:flex;align-items:center;
+  gap:clamp(14px,3vw,48px)}
 .sb-title{font-size:var(--fs-h3);font-weight:800;letter-spacing:-.02em;color:#fff;white-space:nowrap}
 .subbar .subtabs{margin:0;display:flex;flex-wrap:wrap;gap:clamp(6px,.8vw,12px)}
 .subbar .subtabs a{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);
@@ -447,7 +448,8 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
   transition:background-color .25s,color .25s,border-color .25s}
 .subbar .subtabs a:hover{border-color:var(--mint);color:#fff;background:rgba(127,209,168,.16)}
 .subbar .subtabs a.active{background:var(--mint);border-color:var(--mint);color:var(--navy)}
-@media (max-width:700px){ .subbar .wrap{flex-direction:column;align-items:flex-start;gap:10px}
+@media (max-width:700px){ :root{--sbh:96px}
+  .subbar .wrap{flex-direction:column;align-items:flex-start;justify-content:center;gap:9px}
   .subbar .sb-vein{display:none} }
 
 @media (min-width:900px) and (min-height:640px){ html{scroll-snap-type:y proximity} }
@@ -583,10 +585,25 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
   .scrollcue{display:none}
 }
 
-  .screen.about{min-height:calc(100svh - var(--hh) - 58px);scroll-snap-align:none}
-  .about .stage{padding:clamp(18px,3.4vh,44px) 0 clamp(20px,4vh,48px)}
-  .about .close{top:clamp(10px,1.4vw,28px)}
-  @media (max-width:900px){ .screen.about{min-height:0} .about .stage{padding-block:34px 40px} }
+  /* 개요 화면: 어떤 창 크기에서도 헤더+탭바를 뺀 나머지에 정확히 들어가도록
+     세로를 먹는 값마다 vh 상한을 건다 (min(기존값, N vh)) */
+  .screen.about{height:calc(100svh - var(--hh) - var(--sbh));min-height:0;scroll-snap-align:none}
+  .about.open{height:auto;min-height:calc(100svh - var(--hh) - var(--sbh))}
+  .about .stage{padding:min(3vh,34px) 0 min(3.4vh,40px);gap:min(2.2vh,26px)}
+  .about .intro{padding-bottom:min(1.4vh,16px)}
+  .about .mark{width:min(clamp(44px,4.6vw,92px),8.6vh)}
+  .about .mark img{width:62%;height:auto}
+  .about h2{margin-top:min(2.4vh,26px);font-size:min(clamp(24px,3.9vw,74px),6.4vh)}
+  .about .lede{margin-top:min(1.8vh,20px);font-size:min(clamp(13px,1.22vw,22px),2.1vh);line-height:1.78}
+  .about .cell{min-height:min(clamp(84px,9.4vw,186px),16vh);padding-block:min(1.8vh,22px)}
+  .about .cell b{font-size:min(clamp(18px,2.35vw,44px),4.6vh)}
+  .about .hint{padding-top:min(1.6vh,18px);font-size:min(clamp(12px,1.02vw,18px),1.8vh)}
+  .about .panels{min-height:0;padding-top:min(2.4vh,28px)}
+  @media (max-width:900px){
+    .screen.about{height:auto;min-height:calc(100svh - var(--hh) - var(--sbh))}
+    .about .stage{padding-block:30px 36px;gap:18px}
+    .about .cell{min-height:64px}
+  }
 </style>
 </head>
 <body data-sec="about">
@@ -673,7 +690,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
   <div class="stage">
     <div class="fold"><div><div class="intro">
-      <div class="mark"><svg viewBox="0 0 26 26" fill="none"><path d="M13 24C13 24 5 20 5 11C5 6 9 2 13 2C17 2 21 6 21 11C21 20 13 24 13 24Z" stroke="#0B1F23" stroke-width="1.8"/><path d="M13 24V9" stroke="#0B1F23" stroke-width="1.8"/></svg></div>
+      <div class="mark"><img src="images/brand/verdex-mark.svg" alt=""></div>
       <h2>지속가능성을 위한 AI 파트너</h2>
       <p class="lede">베르덱스에이아이는 AI 기술로 환경 문제 해결을 가속화하고, 모든 경제 주체가 지속가능한 미래를 구축하도록 지원합니다. 환경 모니터링, 탄소중립, ESG 경영, 스마트 에너지 관리 전 영역에서 분석·예측·최적화 솔루션을 제공합니다.</p>
     </div></div></div>
