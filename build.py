@@ -259,8 +259,10 @@ ABOUT_CSS = """
   .about.open{height:auto;min-height:calc(100svh - var(--hh) - var(--sbh))}
   .about .stage{padding:min(3vh,34px) 0 min(3.4vh,40px);gap:min(2.2vh,26px)}
   .about .intro{padding-bottom:min(1.4vh,16px)}
-  .about .mark{width:min(clamp(44px,4.6vw,92px),8.6vh)}
-  .about .mark img{width:62%;height:auto}
+  /* 심볼만이 아니라 풀 로고(잎+워드마크). 사진 위에 흰색 녹아웃으로 직접 얹는다 */
+  .about .mark{width:min(clamp(160px,16.5vw,290px),19vh);aspect-ratio:auto;
+    background:none;border-radius:0;display:block}
+  .about .mark img{width:100%;height:auto;display:block}
   .about h2{margin-top:min(2.4vh,26px);font-size:min(clamp(24px,3.9vw,74px),6.4vh)}
   .about .lede{margin-top:min(1.8vh,20px);font-size:min(clamp(13px,1.22vw,22px),2.1vh);line-height:1.78}
   .about .cell{min-height:min(clamp(84px,9.4vw,186px),16vh);padding-block:min(1.8vh,22px)}
