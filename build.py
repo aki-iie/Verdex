@@ -95,33 +95,21 @@ def hero_band(f, m):
 </section>'''
 
 def hero_subbar(f, m):
-    """회사 소개 챕터: 로고 밑 섹션 탭 바 (+ 개요를 뺀 페이지는 얇은 챕터 밴드)"""
-    bar = f'''<div class="subbar">
-  <div class="wrap">
-    <span class="sb-title">{SEC_LABEL.get(section_of(f), "")}</span>
-    {subtabs_html(m["subtabs"])}
-  </div>
-</div>'''
-    return bar + f'''
-<div class="chapband">
-  <img src="images/about-solar.jpg" alt="">
-  <div class="cb-veil"></div>
-  <svg class="cb-vein" viewBox="0 0 1200 240" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
-    <g stroke="#7FD1A8" fill="none" stroke-linecap="round" opacity=".55">
-      <path d="M1250,206 C1150,196 1060,180 962,156" stroke-width="1.7"/>
-      <path d="M1136,188 C1130,156 1136,128 1150,100" stroke-width="1.2"/>
-      <path d="M1052,172 C1046,144 1052,120 1064,96" stroke-width="1.2"/>
-      <path d="M972,158 C966,134 972,112 982,92" stroke-width="1.1"/>
-      <path d="M1094,180 C1104,192 1116,202 1132,210" stroke-width="1"/>
+    """회사 소개 챕터: 로고 바로 밑에 붙는 섹션 탭 바 (제목·탭·브랜드 라인)"""
+    return f'''<div class="subbar">
+  <svg class="sb-vein" viewBox="0 0 320 56" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+    <g stroke="#7FD1A8" fill="none" stroke-linecap="round" opacity=".5">
+      <path d="M340,50 C288,45 236,36 186,22" stroke-width="1.4"/>
+      <path d="M262,41 C260,30 264,21 272,12" stroke-width="1"/>
+      <path d="M212,30 C210,22 214,15 222,8" stroke-width="1"/>
     </g>
-    <g fill="#CDF5DC" opacity=".85">
-      <circle cx="1150" cy="99" r="3.2"/><circle cx="1064" cy="95" r="3.2"/>
-      <circle cx="982" cy="91" r="2.7"/><circle cx="1132" cy="210" r="2.4"/>
+    <g fill="#C7F2D6" opacity=".85">
+      <circle cx="272" cy="12" r="2.4"/><circle cx="222" cy="8" r="2"/>
     </g>
   </svg>
   <div class="wrap">
-    <div class="eyebrow">{m["eyebrow"]}</div>
-    <h1>{BAND_TITLE.get(f, re.sub("<.*?>","",m["h1"]))}</h1>
+    <span class="sb-title">{SEC_LABEL.get(section_of(f), "")}</span>
+    {subtabs_html(m["subtabs"])}
   </div>
 </div>'''
 
@@ -256,7 +244,7 @@ LEADER_CSS = """
 """
 
 ABOUT_CSS = """
-  .screen.about{min-height:clamp(460px,calc(100svh - var(--hh) - 300px),820px);scroll-snap-align:none}
+  .screen.about{min-height:calc(100svh - var(--hh) - 58px);scroll-snap-align:none}
   .about .stage{padding:clamp(18px,3.4vh,44px) 0 clamp(20px,4vh,48px)}
   .about .close{top:clamp(10px,1.4vw,28px)}
   @media (max-width:900px){ .screen.about{min-height:0} .about .stage{padding-block:34px 40px} }
