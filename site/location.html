@@ -448,8 +448,22 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 .subbar .subtabs a.active{background:var(--navy);border-color:var(--navy);color:#fff}
 @media (max-width:700px){ .subbar .wrap{flex-direction:column;align-items:flex-start;gap:10px} }
 
+/* ── 챕터 밴드 : 탭 바 아래 얇은 사진 띠 (개요를 뺀 회사소개 페이지) ── */
+.chapband{position:relative;overflow:hidden;background:#05101B;
+  height:clamp(148px,21vh,230px);display:flex;align-items:flex-end}
+.chapband img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 58%}
+.chapband .cb-veil{position:absolute;inset:0;background:linear-gradient(100deg,
+  rgba(5,16,27,.9) 0%,rgba(5,16,27,.74) 42%,rgba(5,16,27,.44) 76%,rgba(5,16,27,.32) 100%)}
+.chapband .cb-vein{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.chapband .wrap{position:relative;z-index:2;max-width:none;padding-bottom:clamp(16px,2.2vw,34px)}
+.chapband .eyebrow{color:var(--mint)}
+.chapband h1{margin-top:clamp(7px,.9vw,13px);font-size:clamp(27px,3.3vw,56px);font-weight:900;
+  letter-spacing:-.03em;line-height:1.12;color:#fff}
+
 
   .loc{padding-block:clamp(44px,5vw,100px)}
+  .loc-lede{max-width:56ch;font-size:clamp(15px,1.12vw,20px);line-height:1.9;color:var(--muted)}
+  .loc .loc-top{margin-top:clamp(26px,3vw,52px)}
   .loc-top{margin-top:clamp(30px,3.6vw,64px);display:grid;
     grid-template-columns:1.85fr 1fr;gap:clamp(16px,1.8vw,30px);align-items:stretch}
   .map-slot{position:relative;margin:0;aspect-ratio:16/9;border-radius:6px;overflow:hidden;
@@ -558,14 +572,31 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
     <div class="subtabs"><a href="./about-overview.html">개요</a><a href="./about-leadership.html">리더십</a><a href="./about-history.html">연혁</a><a href="./location.html" class="active">오시는 길</a></div>
   </div>
 </div>
+<div class="chapband">
+  <img src="images/about-solar.jpg" alt="">
+  <div class="cb-veil"></div>
+  <svg class="cb-vein" viewBox="0 0 1200 240" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+    <g stroke="#7FD1A8" fill="none" stroke-linecap="round" opacity=".55">
+      <path d="M1250,206 C1150,196 1060,180 962,156" stroke-width="1.7"/>
+      <path d="M1136,188 C1130,156 1136,128 1150,100" stroke-width="1.2"/>
+      <path d="M1052,172 C1046,144 1052,120 1064,96" stroke-width="1.2"/>
+      <path d="M972,158 C966,134 972,112 982,92" stroke-width="1.1"/>
+      <path d="M1094,180 C1104,192 1116,202 1132,210" stroke-width="1"/>
+    </g>
+    <g fill="#CDF5DC" opacity=".85">
+      <circle cx="1150" cy="99" r="3.2"/><circle cx="1064" cy="95" r="3.2"/>
+      <circle cx="982" cy="91" r="2.7"/><circle cx="1132" cy="210" r="2.4"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">Location</div>
+    <h1>오시는 길</h1>
+  </div>
+</div>
 <main>
 <section class="loc">
   <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">Location</div>
-      <h2>오시는 길</h2>
-      <p>2호선 왕십리역에서 도보로 닿는 거리에 있습니다.<br>방문 전 연락 주시면 더 편하게 안내해 드리겠습니다.</p>
-    </div>
+    <p class="loc-lede">2호선 왕십리역에서 도보로 닿는 거리에 있습니다.<br>방문 전 연락 주시면 더 편하게 안내해 드리겠습니다.</p>
 
     <div class="loc-top">
       <figure class="map-slot">

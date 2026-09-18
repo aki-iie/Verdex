@@ -448,6 +448,18 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 .subbar .subtabs a.active{background:var(--navy);border-color:var(--navy);color:#fff}
 @media (max-width:700px){ .subbar .wrap{flex-direction:column;align-items:flex-start;gap:10px} }
 
+/* ── 챕터 밴드 : 탭 바 아래 얇은 사진 띠 (개요를 뺀 회사소개 페이지) ── */
+.chapband{position:relative;overflow:hidden;background:#05101B;
+  height:clamp(148px,21vh,230px);display:flex;align-items:flex-end}
+.chapband img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 58%}
+.chapband .cb-veil{position:absolute;inset:0;background:linear-gradient(100deg,
+  rgba(5,16,27,.9) 0%,rgba(5,16,27,.74) 42%,rgba(5,16,27,.44) 76%,rgba(5,16,27,.32) 100%)}
+.chapband .cb-vein{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.chapband .wrap{position:relative;z-index:2;max-width:none;padding-bottom:clamp(16px,2.2vw,34px)}
+.chapband .eyebrow{color:var(--mint)}
+.chapband h1{margin-top:clamp(7px,.9vw,13px);font-size:clamp(27px,3.3vw,56px);font-weight:900;
+  letter-spacing:-.03em;line-height:1.12;color:#fff}
+
 @media (min-width:900px) and (min-height:640px){ html{scroll-snap-type:y proximity} }
 /* ── 1. 히어로 ───────────────────────────── */
   .hero .plate{position:absolute;inset:0;overflow:hidden}

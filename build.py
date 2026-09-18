@@ -95,11 +95,35 @@ def hero_band(f, m):
 </section>'''
 
 def hero_subbar(f, m):
-    """개요 페이지: 사진 히어로 대신 로고 바로 밑에 붙는 섹션 탭 바"""
-    return f'''<div class="subbar">
+    """회사 소개 챕터: 로고 밑 섹션 탭 바 (+ 개요를 뺀 페이지는 얇은 챕터 밴드)"""
+    bar = f'''<div class="subbar">
   <div class="wrap">
     <span class="sb-title">{SEC_LABEL.get(section_of(f), "")}</span>
     {subtabs_html(m["subtabs"])}
+  </div>
+</div>'''
+    if f == "about-overview.html":
+        return bar
+    return bar + f'''
+<div class="chapband">
+  <img src="images/about-solar.jpg" alt="">
+  <div class="cb-veil"></div>
+  <svg class="cb-vein" viewBox="0 0 1200 240" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+    <g stroke="#7FD1A8" fill="none" stroke-linecap="round" opacity=".55">
+      <path d="M1250,206 C1150,196 1060,180 962,156" stroke-width="1.7"/>
+      <path d="M1136,188 C1130,156 1136,128 1150,100" stroke-width="1.2"/>
+      <path d="M1052,172 C1046,144 1052,120 1064,96" stroke-width="1.2"/>
+      <path d="M972,158 C966,134 972,112 982,92" stroke-width="1.1"/>
+      <path d="M1094,180 C1104,192 1116,202 1132,210" stroke-width="1"/>
+    </g>
+    <g fill="#CDF5DC" opacity=".85">
+      <circle cx="1150" cy="99" r="3.2"/><circle cx="1064" cy="95" r="3.2"/>
+      <circle cx="982" cy="91" r="2.7"/><circle cx="1132" cy="210" r="2.4"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">{m["eyebrow"]}</div>
+    <h1>{m["h1"]}</h1>
   </div>
 </div>'''
 
@@ -154,6 +178,8 @@ HIST_CSS = """
 
 LOC_CSS = """
   .loc{padding-block:clamp(44px,5vw,100px)}
+  .loc-lede{max-width:56ch;font-size:clamp(15px,1.12vw,20px);line-height:1.9;color:var(--muted)}
+  .loc .loc-top{margin-top:clamp(26px,3vw,52px)}
   .loc-top{margin-top:clamp(30px,3.6vw,64px);display:grid;
     grid-template-columns:1.85fr 1fr;gap:clamp(16px,1.8vw,30px);align-items:stretch}
   .map-slot{position:relative;margin:0;aspect-ratio:16/9;border-radius:6px;overflow:hidden;
