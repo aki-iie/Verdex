@@ -103,8 +103,98 @@ def hero_subbar(f, m):
   </div>
 </div>'''
 
-SUBBAR = {"about-overview.html", "about-leadership.html"}
+SUBBAR = {"about-overview.html", "about-leadership.html", "about-history.html", "location.html"}
 SEC_LABEL = {"about":"회사 소개","business":"사업 분야","news":"뉴스룸","resources":"자료","careers":"채용","contact":"문의"}
+
+
+HIST_CSS = """
+  .hist{padding-block:clamp(44px,5vw,100px)}
+  .tl{margin-top:clamp(34px,4vw,72px);display:flex;flex-direction:column;gap:clamp(30px,3.4vw,64px)}
+  .tl-group{display:grid;grid-template-columns:minmax(96px,168px) 1fr;gap:clamp(18px,3vw,56px)}
+  .tl-year span{position:sticky;top:calc(var(--hh) + 82px);display:block;
+    font-family:var(--mono);font-size:clamp(22px,2.2vw,40px);font-weight:700;
+    letter-spacing:-.01em;color:var(--navy);line-height:1}
+  .tl-items{position:relative;border-left:1px solid var(--line);
+    display:flex;flex-direction:column;gap:clamp(24px,2.8vw,48px)}
+  .tl-card{position:relative;padding-left:clamp(20px,2.4vw,40px)}
+  .tl-card::before{content:"";position:absolute;left:-5px;top:7px;width:9px;height:9px;border-radius:50%;
+    background:var(--navy);box-shadow:0 0 0 5px #fff}
+  .tl-card.ahead::before,.tl-card.founding::before{background:var(--brand)}
+  .tl-card.founding::before{width:13px;height:13px;left:-7px;top:5px}
+  .tl-date{font-family:var(--mono);font-size:var(--fs-small);font-weight:500;
+    letter-spacing:.08em;color:var(--muted)}
+  .chip{display:inline-block;margin-top:10px;font-size:clamp(11px,.86vw,13px);font-weight:700;
+    letter-spacing:.02em;padding:.32em .78em;border-radius:2px}
+  .chip-tech{background:rgba(14,127,171,.13);color:var(--sky)}
+  .chip-rnd{background:rgba(10,58,99,.1);color:var(--navy)}
+  .chip-partner{background:rgba(46,139,58,.13);color:var(--brand)}
+  .chip-book{background:rgba(127,209,168,.22);color:#1F6B2B}
+  .chip-found{background:var(--brand);color:#fff}
+  .chip-ahead{background:transparent;color:var(--brand);border:1px dashed var(--brand)}
+  .tl-card h3{margin-top:10px;font-size:var(--fs-h3);font-weight:800;letter-spacing:-.022em;
+    color:var(--navy);line-height:1.5}
+  .tl-card p{margin-top:9px;max-width:58ch;font-size:var(--fs-body);line-height:1.85;color:var(--muted)}
+  .tl-card.ahead{border:1px dashed rgba(46,139,58,.45);border-radius:5px;
+    background:rgba(46,139,58,.04);padding:clamp(18px,1.8vw,30px);margin-left:clamp(20px,2.4vw,40px)}
+  .tl-card.ahead::before{left:calc(-1 * clamp(20px,2.4vw,40px) - 5px)}
+  .tl-card.feat{display:grid;grid-template-columns:clamp(110px,11vw,168px) 1fr;
+    gap:clamp(18px,2vw,34px);align-items:start}
+  .tl-cover{aspect-ratio:3/4;border:1.5px dashed #C3CDC2;border-radius:4px;background:#F1F4F0;
+    display:grid;place-items:center;text-align:center;line-height:1.7;
+    font-size:var(--fs-small);color:#8C9A8E;padding:10px}
+  .tl-link{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:var(--fs-small);
+    font-weight:700;letter-spacing:.05em;color:var(--brand)}
+  @media (max-width:760px){
+    .tl-group{grid-template-columns:1fr;gap:14px}
+    .tl-year span{position:static}
+    .tl-card.feat{grid-template-columns:1fr}
+    .tl-cover{max-width:180px}
+  }
+"""
+
+LOC_CSS = """
+  .loc{padding-block:clamp(44px,5vw,100px)}
+  .loc-top{margin-top:clamp(30px,3.6vw,64px);display:grid;
+    grid-template-columns:1.85fr 1fr;gap:clamp(16px,1.8vw,30px);align-items:stretch}
+  .map-slot{position:relative;margin:0;aspect-ratio:16/9;border-radius:6px;overflow:hidden;
+    border:1.5px dashed #C3CDC2;display:grid;place-items:center;
+    background:
+      repeating-linear-gradient(0deg,rgba(10,58,99,.055) 0 1px,transparent 1px 46px),
+      repeating-linear-gradient(90deg,rgba(10,58,99,.055) 0 1px,transparent 1px 46px),
+      linear-gradient(160deg,#EFF4F0,#E4EDE6)}
+  .map-slot .slot-label{position:absolute;left:0;right:0;bottom:clamp(14px,1.6vw,26px)}
+  .slot-label{font-size:var(--fs-small);line-height:1.8;text-align:center;color:#8C9A8E}
+  .map-pin{position:absolute;left:50%;top:46%;width:clamp(30px,2.8vw,42px);height:auto;
+    transform:translate(-50%,-100%);filter:drop-shadow(0 8px 14px rgba(10,58,99,.3))}
+  .map-ring{position:absolute;left:50%;top:46%;width:clamp(56px,5.4vw,84px);aspect-ratio:1;
+    transform:translate(-50%,-50%);border-radius:50%;
+    border:1.5px solid rgba(46,139,58,.5);background:rgba(46,139,58,.08)}
+  .loc-shots{display:grid;grid-template-rows:1fr 1fr;gap:clamp(16px,1.8vw,30px)}
+  .shot-slot{margin:0;border-radius:6px;border:1.5px dashed #C3CDC2;background:#F1F4F0;
+    display:grid;place-items:center;text-align:center;line-height:1.8;
+    font-size:var(--fs-small);color:#8C9A8E;padding:12px;min-height:118px}
+  .loc-btns{margin-top:clamp(20px,2.2vw,34px);display:flex;gap:10px;flex-wrap:wrap}
+  .lbtn{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:3px;
+    padding:.8em 1.5em;font-size:var(--fs-small);font-weight:700;color:var(--muted);
+    transition:border-color .25s,color .25s,background-color .25s}
+  .lbtn:hover{border-color:var(--brand);color:var(--brand)}
+  .lbtn.primary{background:var(--cta);border-color:var(--cta);color:#fff}
+  .lbtn.primary:hover{background:var(--cta-hover);border-color:var(--cta-hover);color:#fff}
+  .loc-grid{margin-top:clamp(34px,4vw,72px);display:grid;grid-template-columns:repeat(4,1fr);
+    gap:clamp(16px,2.2vw,40px)}
+  .loc-grid>div{border-top:2px solid var(--navy);padding-top:clamp(12px,1.5vw,20px)}
+  .loc-grid b{display:block;font-family:var(--mono);font-size:var(--fs-small);font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
+  .loc-grid p{margin-top:10px;font-size:var(--fs-h3);font-weight:700;letter-spacing:-.02em;
+    color:var(--navy);line-height:1.6}
+  .loc-grid span{display:block;margin-top:8px;font-size:var(--fs-small);line-height:1.8;color:var(--muted)}
+  @media (max-width:900px){
+    .loc-top{grid-template-columns:1fr}
+    .loc-shots{grid-template-rows:none;grid-template-columns:1fr 1fr}
+    .loc-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:560px){ .loc-grid{grid-template-columns:1fr} .loc-shots{grid-template-columns:1fr} }
+"""
 
 LEADER_CSS = """
   .lead{background:var(--paper);padding-block:clamp(44px,5.2vw,104px)}
@@ -237,6 +327,10 @@ for f, m in pages.items():
         extra_js = f"\n<script>\n{homejs}</script>"
     elif f == "about-leadership.html":
         page_css = LEADER_CSS
+    elif f == "about-history.html":
+        page_css = HIST_CSS
+    elif f == "location.html":
+        page_css = LOC_CSS
     title = f'{re.sub("<.*?>","",m["h1"])} — Verdex AI'
     (OUT/f).write_text(page_html(title, section_of(f), page_css, hero, body, extra_js), encoding="utf-8")
 

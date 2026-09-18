@@ -1,39 +1,48 @@
-<section>
+<section class="loc">
   <div class="wrap">
-
-    <div class="map-container" style="padding:0;">
-      <iframe
-        src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%EC%8B%9C%20%EC%84%B1%EB%8F%99%EA%B5%AC%20%EB%AC%B4%ED%95%99%EB%A1%9C6%EA%B8%B8%2050%20%EC%84%B1%EB%8F%99%EC%82%BC%EC%84%B1%EC%89%90%EB%A5%B4%EB%B9%8Csrc="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%EC%8B%9C%20%EC%84%B1%EB%8F%99%EA%B5%AC%20%EB%AC%B4%ED%95%99%EB%A1%9C6%EA%B8%B8%2050&output=embed"output=embed"
-        width="100%" height="100%" style="border:0;" loading="lazy" allowfullscreen>
-      </iframe>
+    <div class="section-head">
+      <div class="eyebrow">Location</div>
+      <h2>오시는 길</h2>
+      <p>2호선 왕십리역에서 도보로 닿는 거리에 있습니다.<br>방문 전 연락 주시면 더 편하게 안내해 드리겠습니다.</p>
     </div>
-    <p style="font-size:12px;color:var(--slate);margin:-24px 0 40px;font-family:var(--mono);">
-      Google 지도는 한국 내 지도 데이터 반출 제한으로 위치 정확도가 낮을 수 있습니다.
-      <a href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%EC%8B%9C%20%EC%84%B1%EB%8F%99%EA%B5%AC%20%EB%AC%B4%ED%95%99%EB%A1%9C6%EA%B8%B8%2050%20%EC%84%B1%EB%8F%99%EC%82%BC%EC%84%B1%EC%89%90%EB%A5%B4%EB%B9%8C" target="_blank" rel="noopener" style="color:var(--forest);">네이버 지도에서 정확한 위치 보기 ↗</a>
-    </p>
 
-    <div class="info-grid">
-      <div class="info-card">
-        <h3>주소</h3>
+    <div class="loc-top">
+      <figure class="map-slot">
+        <span class="slot-label">지도 이미지 자리<br>네이버 정적 지도 · 1600 × 900</span>
+        <svg class="map-pin" viewBox="0 0 34 46" aria-hidden="true">
+          <path d="M17 45C17 45 32 27.5 32 16.5A15 15 0 1 0 2 16.5C2 27.5 17 45 17 45Z"
+                fill="#2E8B3A" stroke="#fff" stroke-width="2.4"/>
+          <circle cx="17" cy="16.5" r="5.4" fill="#fff"/>
+        </svg>
+        <span class="map-ring" aria-hidden="true"></span>
+      </figure>
+
+      <div class="loc-shots">
+        <figure class="shot-slot"><span>사진 자리<br>건물 외관</span></figure>
+        <figure class="shot-slot"><span>사진 자리<br>1층 입구 · 로비</span></figure>
+      </div>
+    </div>
+
+    <div class="loc-btns">
+      <a class="lbtn primary" target="_blank" rel="noopener"
+         href="https://map.naver.com/p/search/%EC%84%9C%EC%9A%B8%EC%8B%9C%20%EC%84%B1%EB%8F%99%EA%B5%AC%20%EB%AC%B4%ED%95%99%EB%A1%9C6%EA%B8%B8%2050%20%EC%84%B1%EB%8F%99%EC%82%BC%EC%84%B1%EC%89%90%EB%A5%B4%EB%B9%8C">네이버 지도에서 열기 ↗</a>
+      <a class="lbtn" target="_blank" rel="noopener"
+         href="https://map.naver.com/p/directions/-/-/-/car?c=15.00,0,0,0,dh">길찾기 ↗</a>
+    </div>
+
+    <div class="loc-grid">
+      <div><b>주소</b>
         <p>(04709) 서울특별시 성동구 무학로6길 50<br>101동 205호 (도선동, 성동삼성쉐르빌)</p>
-        <p class="dim">베르덱스에이아이 주식회사</p>
-      </div>
-      <div class="info-card">
-        <h3>연락처</h3>
+        <span>베르덱스에이아이 주식회사</span></div>
+      <div><b>연락처</b>
         <p>0502-1940-1960</p>
-        <p class="dim">평일 09:00 – 18:00<br>점심시간 12:00 – 13:00</p>
-      </div>
-      <div class="info-card">
-        <h3>대중교통</h3>
+        <span>평일 09:00 – 18:00 · 점심 12:00 – 13:00</span></div>
+      <div><b>대중교통</b>
         <p>지하철 2호선 왕십리역</p>
-        <p class="dim">1번 또는 2번 출구</p>
-        <p class="dim">5호선·수인분당선·경의중앙선 환승역 (해당 노선 출구는 확인 필요)</p>
-      </div>
-      <div class="info-card">
-        <h3>주차</h3>
-        <p class="dim">건물 내 주차공간이 협소하니, 가능한 대중교통 이용을 권장합니다.</p>
-      </div>
+        <span>1번 또는 2번 출구 · 5호선, 수인분당선, 경의중앙선 환승<br>[해당 노선 출구 확인 필요]</span></div>
+      <div><b>주차</b>
+        <p>건물 내 주차 가능</p>
+        <span>주차 공간이 협소하니 가능하면 대중교통을 권장합니다.</span></div>
     </div>
-
   </div>
 </section>
