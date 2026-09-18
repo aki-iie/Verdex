@@ -210,26 +210,30 @@ LOC_CSS = """
 """
 
 LEADER_CSS = """
-  .lead{background:var(--paper);padding-block:clamp(44px,5.2vw,104px)}
-  .lead-grid{display:grid;grid-template-columns:minmax(280px,.8fr) 1.3fr;
-    gap:clamp(30px,4.6vw,88px);align-items:start;max-width:none}
+  /* 인사말 첫 화면: 사진·인용문·여백에 vh 상한을 걸어 서명까지 한 화면에.
+     본문 글자 크기(var(--fs-body))는 그대로 두고 줄간격·여백만 조인다. */
+  .lead{background:var(--paper);padding-block:min(3.2vh,40px) min(3.6vh,48px)}
+  .lead-grid{display:grid;grid-template-columns:min(34vh,330px) 1fr;
+    gap:clamp(26px,3.4vw,64px);align-items:start;max-width:none}
   .portrait{margin:0}
   .portrait img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 22%;
-    border-radius:6px;box-shadow:0 34px 64px -36px rgba(10,58,99,.5)}
-  .portrait figcaption{margin-top:clamp(16px,1.7vw,26px)}
-  .p-name{font-size:clamp(23px,2.2vw,40px);font-weight:900;letter-spacing:-.03em;color:var(--navy);line-height:1.2}
-  .p-role{margin-top:7px;font-family:var(--mono);font-size:var(--fs-small);
+    border-radius:6px;box-shadow:0 30px 58px -34px rgba(10,58,99,.5)}
+  .portrait figcaption{margin-top:min(1.8vh,20px)}
+  .p-name{font-size:min(clamp(20px,1.9vw,34px),3.4vh);font-weight:900;letter-spacing:-.03em;
+    color:var(--navy);line-height:1.2}
+  .p-role{margin-top:6px;font-family:var(--mono);font-size:var(--fs-small);
     letter-spacing:.14em;font-weight:500;color:var(--brand)}
-  .say blockquote{margin:clamp(16px,1.8vw,28px) 0 0;font-size:clamp(21px,2.5vw,44px);font-weight:800;
-    line-height:1.5;letter-spacing:-.03em;color:var(--navy);text-wrap:balance}
-  .say p{margin-top:clamp(14px,1.5vw,24px);max-width:64ch;font-size:var(--fs-body);
-    line-height:1.95;color:var(--muted)}
-  .sign{margin-top:clamp(28px,3vw,50px);padding-top:clamp(20px,2vw,32px);border-top:1px solid var(--line);
-    display:flex;align-items:flex-end;gap:clamp(18px,2.2vw,36px);flex-wrap:wrap}
-  .sign-slot{width:clamp(140px,13vw,196px);aspect-ratio:12/5;border:1.5px dashed #C3CDC2;border-radius:4px;
-    background:#F1F4F0;display:grid;place-items:center;font-size:var(--fs-small);color:#8C9A8E}
-  .sign-who{display:flex;flex-direction:column;gap:4px;font-size:var(--fs-small);color:var(--muted)}
-  .sign-who b{font-size:var(--fs-h3);font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+  .say blockquote{margin:min(1.4vh,16px) 0 0;font-size:min(clamp(19px,1.85vw,32px),3.5vh);
+    font-weight:800;line-height:1.45;letter-spacing:-.03em;color:var(--navy);text-wrap:balance}
+  .say p{margin-top:min(1.5vh,18px);max-width:64ch;font-size:var(--fs-body);
+    line-height:1.82;color:var(--muted)}
+  .sign{margin-top:min(2.2vh,26px);padding-top:min(1.8vh,22px);border-top:1px solid var(--line);
+    display:flex;align-items:flex-end;gap:clamp(16px,2vw,32px);flex-wrap:wrap}
+  .sign-slot{width:min(clamp(118px,11vw,168px),22vh);aspect-ratio:12/5;border:1.5px dashed #C3CDC2;
+    border-radius:4px;background:#F1F4F0;display:grid;place-items:center;
+    font-size:var(--fs-small);color:#8C9A8E}
+  .sign-who{display:flex;flex-direction:column;gap:3px;font-size:var(--fs-small);color:var(--muted)}
+  .sign-who b{font-size:min(var(--fs-h3),2.6vh);font-weight:800;letter-spacing:-.02em;color:var(--ink)}
   .career{padding-block:clamp(44px,5.2vw,104px)}
   .career-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.2vw,40px);
     margin-top:clamp(28px,3.2vw,56px)}
@@ -238,15 +242,20 @@ LEADER_CSS = """
   .career-grid span{display:block;margin-top:8px;font-size:var(--fs-small);color:var(--muted)}
   .career-link{display:inline-block;margin-top:clamp(26px,2.8vw,44px);font-family:var(--mono);
     font-size:var(--fs-small);font-weight:700;letter-spacing:.05em;color:var(--brand)}
-  @media (max-width:900px){ .lead-grid{grid-template-columns:1fr;gap:28px}
-    .portrait img{max-width:420px} .career-grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:900px){
+    .lead-grid{grid-template-columns:1fr;gap:26px}
+    .portrait img{max-width:400px}
+    .say blockquote{font-size:clamp(21px,5.2vw,30px)}
+    .career-grid{grid-template-columns:repeat(2,1fr)}
+  }
   @media (max-width:560px){ .career-grid{grid-template-columns:1fr} }
 """
 
 ABOUT_CSS = """
   /* 개요 화면: 어떤 창 크기에서도 헤더+탭바를 뺀 나머지에 정확히 들어가도록
      세로를 먹는 값마다 vh 상한을 건다 (min(기존값, N vh)) */
-  .screen.about{height:calc(100svh - var(--hh) - var(--sbh));min-height:0;scroll-snap-align:none}
+  /* main > section 공통 여백(96px)이 개요 화면까지 밀고 있어 제거 */
+  .screen.about{padding:0;height:calc(100svh - var(--hh) - var(--sbh));min-height:0;scroll-snap-align:none}
   .about.open{height:auto;min-height:calc(100svh - var(--hh) - var(--sbh))}
   .about .stage{padding:min(3vh,34px) 0 min(3.4vh,40px);gap:min(2.2vh,26px)}
   .about .intro{padding-bottom:min(1.4vh,16px)}
@@ -258,6 +267,10 @@ ABOUT_CSS = """
   .about .cell b{font-size:min(clamp(18px,2.35vw,44px),4.6vh)}
   .about .hint{padding-top:min(1.6vh,18px);font-size:min(clamp(12px,1.02vw,18px),1.8vh)}
   .about .panels{min-height:0;padding-top:min(2.4vh,28px)}
+  /* 펼친 상태: 가운데 정렬을 풀고 위로 붙임 (닫힌 상태의 여백이 남아 비대칭으로 보이던 문제) */
+  .screen.about.open{align-items:flex-start}
+  .about.open .stage{justify-content:flex-start;padding-top:min(2vh,22px);gap:0}
+  .about.open .close{top:min(1.6vh,18px)}
   @media (max-width:900px){
     .screen.about{height:auto;min-height:calc(100svh - var(--hh) - var(--sbh))}
     .about .stage{padding-block:30px 36px;gap:18px}
