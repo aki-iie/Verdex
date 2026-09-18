@@ -5,3 +5,17 @@
 shell.bak*/
 *.bak
 __pycache__/
+
+# Secrets & Credentials
+.env*
+credentials.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*secret*
+*token*
+.npmrc
+.pypirc
+
