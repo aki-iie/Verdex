@@ -67,3 +67,67 @@ verdex-site-v3/
 - 개인정보처리방침 · 이용약관의 `[확인 필요]` 공란 (법률 검토 전)
 - 문의 폼 — 화면만 있고 전송 기능 없음
 - 히어로 풍력 사진 — 라이선스 확인 필요
+
+## 대표님이 글을 올리는 법 — 헤드리스 워드프레스
+
+**대표님은 지금까지 하시던 대로 verdex.kr 워드프레스(wp-admin)에서 글을 쓰시면 됩니다.**
+새로 배우실 도구도, 워드프레스에 설치할 플러그인도 없습니다.
+워드프레스는 이제 공개 사이트가 아니라 **글 쓰는 도구**로만 씁니다.
+
+```
+대표님: wp-admin 에서 글 발행
+   ↓  (REST API)
+python3 wp_sync.py      ← 글·카테고리·대표이미지를 content/wp-posts.json 으로
+   ↓
+python3 build.py        ← 우리 디자인의 뉴스룸 + 글 페이지 생성
+   ↓
+site/ 폴더 배포
+```
+
+### 실행
+
+```bash
+python3 wp_sync.py          # 전체 동기화
+python3 wp_sync.py --limit 5   # 최신 5개만 (테스트)
+python3 wp_sync.py --no-images # 이미지 빼고 글만
+python3 build.py
+```
+
+만들어지는 것
+
+| 결과 | 설명 |
+|---|---|
+| `content/wp-posts.json` | 가져온 글 원본 (빌드가 읽는 파일) |
+| `images/wp/` | 대표이미지 |
+| `site/post-<글번호>.html` | 글 상세 페이지 |
+| `site/news-live.html` | 워드프레스 글로 채운 뉴스룸 |
+
+지금은 손으로 쓴 `news.html` 과 워드프레스판 `news-live.html` 이 **둘 다** 만들어집니다.
+비교해 보시고 워드프레스판으로 확정되면 `build.py` 맨 위의
+
+```python
+WP_NEWSROOM = False   →   True
+```
+
+한 줄만 바꾸면 `news.html` 자체가 워드프레스 글로 채워집니다.
+
+### 카테고리 연결
+
+워드프레스 카테고리를 뉴스룸 필터(미디어보도·보도자료·칼럼)에 잇는 표는
+`wp_sync.py` 맨 위 `CAT_MAP` 에 있습니다. 카테고리를 새로 만드시면 여기 한 줄만 추가하면 됩니다.
+
+```python
+CAT_MAP = {
+    "탄소중립강좌": ("column", "칼럼"),
+    "소식":        ("press",  "보도자료"),
+    "언론보도":     ("media",  "미디어보도"),
+}
+```
+
+### 자동화
+
+`wp_sync.py → build.py` 를 GitHub Actions 에 걸면 사람 손이 아예 빠집니다.
+하루 한 번 또는 대표님이 글을 올리실 때마다 돌려서 `site/` 를 다시 만들고 배포하면 됩니다.
+
+> **주의** — `content/wp-posts.json` 이 저장소에 들어 있다면 그건 화면 확인용 샘플입니다.
+> `wp_sync.py` 를 한 번 돌리면 실제 데이터로 덮어써집니다.

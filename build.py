@@ -23,6 +23,14 @@ js     = (SHELL/"site.js").read_text(encoding="utf-8")
 pages  = json.load(open(SRC/"pages.json", encoding="utf-8"))
 homejs = (SHELL/"home.js").read_text(encoding="utf-8")
 
+# ── 헤드리스 워드프레스 ────────────────────────────────────────────────────
+#  wp_sync.py 가 만든 content/wp-posts.json 이 있으면 글 페이지를 자동 생성합니다.
+#  WP_NEWSROOM = True 로 바꾸면 뉴스룸(news.html) 자체가 워드프레스 글로 채워지고,
+#  False 면 손으로 쓴 뉴스룸은 그대로 두고 news-live.html 에 따로 만듭니다.
+WP_NEWSROOM = False
+WP_FILE  = ROOT/"content"/"wp-posts.json"
+WP_POSTS = json.load(open(WP_FILE, encoding="utf-8")) if WP_FILE.exists() else []
+
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
          '<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;800;900'
@@ -45,7 +53,7 @@ PHOTO = {  # 사진형 히어로 (사진이 들어오면 images/ 에 넣고 phot
  "service-circular-economy.html":  dict(sec="business", label="사진 영역: 재활용·순환 공정"),
  "careers.html":          dict(sec="careers",  label="사진 영역: 팀 작업 장면"),
 }
-SEC = {"news":"news","columns-other":"news","column-":"news","press-":"news",
+SEC = {"news":"news","columns-other":"news","column-":"news","press-":"news","post-":"news",
        "resources":"resources","resource-":"resources","contact":"contact","faq":"contact",
        "privacy":"", "terms":""}
 def section_of(f):
@@ -151,13 +159,24 @@ SEC_TABS = {
  "contact":  [("./contact.html","문의하기"), ("./faq.html","FAQ")],
 }
 
+def active_tab(f):
+    """상세 페이지(기사·자료)에서도 자기 챕터의 대표 탭이 켜지도록."""
+    tabs = SEC_TABS.get(section_of(f), [])
+    if any(h == "./" + f for h, _ in tabs):
+        return f
+    if f.startswith(("post-", "column-", "press-")):
+        return "news.html"
+    if f.startswith("resource-"):
+        return "resources.html"
+    return f
+
 def sec_subtabs(f):
     tabs = SEC_TABS.get(section_of(f), [])
     if not tabs:
         return ""
-    out = []
+    cur, out = active_tab(f), []
     for h, t in tabs:
-        act = ' class="active"' if h == "./" + f else ''
+        act = ' class="active"' if h == "./" + cur else ''
         out.append('<a href="%s"%s>%s</a>' % (h, act, t))
     return '<div class="subtabs">' + "".join(out) + "</div>"
 
@@ -464,6 +483,109 @@ for f, m in pages.items():
         page_css = LOC_CSS
     title = f'{re.sub("<.*?>","",m["h1"])} — Verdex AI'
     (OUT/f).write_text(page_html(title, section_of(f), page_css, hero, body, extra_js), encoding="utf-8")
+
+# ── 워드프레스 글 → 우리 디자인 ──────────────────────────────────────────────
+WP_CSS = """
+  .wp-lead{margin:0 0 clamp(26px,3.2vw,56px);border-radius:10px;overflow:hidden;background:var(--paper)}
+  .wp-lead img{width:100%;height:auto;display:block}
+  .news-media.shot{border:0;background:none}
+  .news-media.shot img{width:100%;height:100%;object-fit:cover;display:block}
+  .back-link{display:inline-block;margin-top:clamp(34px,4vw,68px);padding-top:clamp(20px,2.4vw,36px);
+    border-top:1px solid var(--line);width:100%;font-family:var(--mono);font-size:var(--fs-small);
+    font-weight:700;letter-spacing:.05em;color:var(--brand)}
+  .back-link:hover{color:var(--cta-hover)}
+  .wp-empty{padding:clamp(40px,5vw,90px) 0;text-align:center;color:var(--muted);font-size:var(--fs-body)}
+"""
+
+def esc(s):
+    return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+def wp_meta(p):
+    """워드프레스 글 한 건을 페이지 메타(제목 블록 재료)로 변환."""
+    return dict(
+        crumb='<a href="./news.html">뉴스룸</a> / ' + esc(p["cat_label"]),
+        eyebrow="", h1=esc(p["title"]), lede="",
+        byline=('<span class="author">정복영</span><span>대표 · Verdex AI</span>'
+                if p["cat"] == "column" else ""),
+        updated=(p["date"].replace("-", ".") + ' · <a href="' + esc(p["wp_link"])
+                 + '" target="_blank" rel="noopener">원문 ↗</a>'),
+        subtabs=[])
+
+def wp_post_page(p):
+    f = "post-%s.html" % p["id"]
+    m = wp_meta(p)
+    hero = hero_subbar(f, m) + page_head(f, m)
+    lead = ('<figure class="wp-lead"><img src="%s" alt="%s"></figure>'
+            % (p["image"], esc(p["image_alt"]))) if p.get("image") else ""
+    body = ('<main>\n<article>\n  <div class="wrap">\n    ' + lead
+            + '\n    <div class="body-text">\n' + p["html"] + '\n    </div>\n'
+            '    <a class="back-link" href="./news.html">← 뉴스룸으로</a>\n'
+            '  </div>\n</article>\n</main>')
+    (OUT/f).write_text(page_html(p["title"] + " — Verdex AI", "news", WP_CSS, hero, body),
+                       encoding="utf-8")
+    return f
+
+ROW_TPL = """      <div class="news-row" data-cat="{cat}" id="wp-{id}">
+        <a class="row-link" href="./post-{id}.html" aria-label="{alt}"></a>
+        {media}
+        <div>
+          <h3>{title}</h3>
+          <div class="news-meta"><span class="tag tag-{cat}">{label}</span></div>
+        </div>
+        <span class="news-date">{date}</span>
+      </div>"""
+
+def wp_news_rows(posts):
+    rows = []
+    for p in posts:
+        if p.get("image"):
+            media = '<div class="news-media shot"><img src="%s" alt=""></div>' % p["image"]
+        else:
+            media = '<div class="news-media"><div class="tag-mini">%s</div></div>' % esc(p["cat_label"])
+        rows.append(ROW_TPL.format(cat=p["cat"], id=p["id"], alt=esc(p["title"]),
+                                   media=media, title=esc(p["title"]),
+                                   label=esc(p["cat_label"]), date=p["date"].replace("-", ".")))
+    return "\n\n".join(rows) or ('<div class="wp-empty">아직 가져온 글이 없습니다. '
+                                 '<code>python3 wp_sync.py</code> 를 먼저 실행하세요.</div>')
+
+NEWS_SHELL = """<main>
+<section>
+  <div class="wrap">
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">전체</button>
+      <button class="filter-btn" data-filter="media">미디어보도</button>
+      <button class="filter-btn" data-filter="press">보도자료</button>
+      <button class="filter-btn" data-filter="column">칼럼</button>
+    </div>
+
+    <p id="columnNote">
+      정복영 대표의 「탄소중립개론」 칼럼은 CO2Korea에서 매주 수요일 동시 게재됩니다 —
+      <a href="https://www.co2korea.com/news/articleList.html?sc_sub_section_code=S2N44&amp;view_type=sm" target="_blank" rel="noopener">CO2Korea에서 보기 ↗</a>
+    </p>
+
+    <div class="news-list" id="newsList">
+{rows}
+    </div>
+  </div>
+</section>
+</main>"""
+
+def wp_newsroom(fname, posts):
+    m = dict(crumb="", eyebrow="", h1="뉴스룸", lede="", byline="", updated="", subtabs=[])
+    hero = hero_subbar("news.html", m)
+    body = NEWS_SHELL.format(rows=wp_news_rows(posts))
+    (OUT/fname).write_text(page_html("뉴스룸 — Verdex AI", "news", WP_CSS, hero, body, NEWS_JS),
+                           encoding="utf-8")
+
+if WP_POSTS:
+    for _p in WP_POSTS:
+        wp_post_page(_p)
+    _target = "news.html" if WP_NEWSROOM else "news-live.html"
+    wp_newsroom(_target, WP_POSTS)
+    print("  워드프레스 글 %d개 → post-*.html + %s" % (len(WP_POSTS), _target))
+else:
+    print("  (content/wp-posts.json 없음 — python3 wp_sync.py 를 먼저 실행하면 워드프레스 글이 붙습니다)")
+
 
 # ── 홈 ──────────────────────────────────────────────────────────────────────
 top   = (SHELL/"home-top.html").read_text(encoding="utf-8")
