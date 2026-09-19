@@ -176,6 +176,8 @@ main p{font-size:var(--fs-body);line-height:1.85}
 .overview-media,.expertise-media,.cap-media{aspect-ratio:4/3}
 .biz-media{aspect-ratio:16/10}
 .news-media{width:clamp(96px,10vw,180px);aspect-ratio:4/3;flex:none;border-radius:6px}
+.news-media.shot,.biz-media.shot{border:0;background:none}
+.news-media.shot img,.biz-media.shot img{width:100%;height:100%;object-fit:cover;display:block}
 .ceo-portrait{aspect-ratio:3/4;border-radius:12px}
 .sig-image{width:clamp(140px,14vw,240px);height:clamp(60px,6vw,96px);border-radius:6px}
 
@@ -763,17 +765,17 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
     </div>
     <div class="home-news">
       <a class="biz-card" href="./press-carboneye.html">
-        <div class="biz-media"><div class="placeholder-tag">사진: 소프트웨어 스크린샷</div></div>
+        <!-- 필요한 사진: 사진: 소프트웨어 스크린샷 --><div class="biz-media shot"><img src="images/thumb/press-1.svg" alt="" loading="lazy"></div>
         <h3>베르덱스에이아이, 탄소 감축량 자동 산정 소프트웨어 'VERDEX CarbonEye' 저작권 등록 완료</h3>
         <div class="news-meta"><span class="tag tag-press">보도자료</span><span class="news-date">2026.07.24</span></div>
       </a>
       <a class="biz-card" href="./column-megacity.html">
-        <div class="biz-media"><div class="placeholder-tag">사진: 메가시티 인포그래픽</div></div>
+        <!-- 필요한 사진: 사진: 메가시티 인포그래픽 --><div class="biz-media shot"><img src="images/thumb/column-2.svg" alt="" loading="lazy"></div>
         <h3>[탄소중립개론] 8. '메가시티'—행정통합을 넘어 탄소경제권으로</h3>
         <div class="news-meta"><span class="tag tag-column">칼럼</span><span class="news-date">2026.01.22</span></div>
       </a>
       <a class="biz-card" href="./column-ep7.html">
-        <div class="biz-media"><div class="placeholder-tag">사진: 킬링곡선 그래프</div></div>
+        <!-- 필요한 사진: 사진: 킬링곡선 그래프 --><div class="biz-media shot"><img src="images/thumb/column-3.svg" alt="" loading="lazy"></div>
         <h3>[탄소중립개론] 7. '킬링곡선'이 주는 시사점</h3>
         <div class="news-meta"><span class="tag tag-column">칼럼</span><span class="news-date">2026.01.16</span></div>
       </a>

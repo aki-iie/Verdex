@@ -176,6 +176,8 @@ main p{font-size:var(--fs-body);line-height:1.85}
 .overview-media,.expertise-media,.cap-media{aspect-ratio:4/3}
 .biz-media{aspect-ratio:16/10}
 .news-media{width:clamp(96px,10vw,180px);aspect-ratio:4/3;flex:none;border-radius:6px}
+.news-media.shot,.biz-media.shot{border:0;background:none}
+.news-media.shot img,.biz-media.shot img{width:100%;height:100%;object-fit:cover;display:block}
 .ceo-portrait{aspect-ratio:3/4;border-radius:12px}
 .sig-image{width:clamp(140px,14vw,240px);height:clamp(60px,6vw,96px);border-radius:6px}
 
@@ -578,7 +580,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
     <div class="news-list" id="newsList">
       <div class="news-row" data-cat="press" id="press">
         <a class="row-link" href="./press-carboneye.html" aria-label="베르덱스에이아이, 탄소 감축량 자동 산정 소프트웨어 'VERDEX CarbonEye' 저작권 등록 완료"></a>
-        <div class="news-media"><div class="tag-mini">소프트웨어 스크린샷</div></div>
+        <!-- 필요한 사진: 소프트웨어 스크린샷 --><div class="news-media shot"><img src="images/thumb/press-1.svg" alt="" loading="lazy"></div>
         <div>
           <h3>베르덱스에이아이, 탄소 감축량 자동 산정 소프트웨어 'VERDEX CarbonEye' 저작권 등록 완료</h3>
           <div class="news-meta"><span class="tag tag-press">보도자료</span></div>
@@ -588,7 +590,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-ep11">
         <a class="row-link" href="./column-ep11.html" aria-label="[탄소중립개론]11. 기후위기와 죄수의 딜레마"></a>
-        <div class="news-media"><div class="tag-mini">국제협력 이미지</div></div>
+        <!-- 필요한 사진: 국제협력 이미지 --><div class="news-media shot"><img src="images/thumb/column-2.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론]11. 기후위기와 죄수의 딜레마</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2614" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -598,7 +600,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-ep10">
         <a class="row-link" href="./column-ep10.html" aria-label="[탄소중립개론]10. 기후변화 읽는 가장 넓은 창, 해양의 중요성"></a>
-        <div class="news-media"><div class="tag-mini">해양 이미지</div></div>
+        <!-- 필요한 사진: 해양 이미지 --><div class="news-media shot"><img src="images/thumb/column-3.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론]10. 기후변화 읽는 가장 넓은 창, 해양의 중요성</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2582" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -608,7 +610,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-ep9">
         <a class="row-link" href="./column-ep9.html" aria-label="[탄소중립개론]9. NO ONE LEFT BEHIND"></a>
-        <div class="news-media"><div class="tag-mini">기후정의 이미지</div></div>
+        <!-- 필요한 사진: 기후정의 이미지 --><div class="news-media shot"><img src="images/thumb/column-4.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론]9. NO ONE LEFT BEHIND</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2571" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -618,7 +620,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-mega">
         <a class="row-link" href="./column-megacity.html" aria-label="[탄소중립개론]8. '메가시티'-행정통합을 넘어 탄소경제권으로"></a>
-        <div class="news-media"><div class="tag-mini">메가시티 인포그래픽</div></div>
+        <!-- 필요한 사진: 메가시티 인포그래픽 --><div class="news-media shot"><img src="images/thumb/column-1.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론]8. '메가시티'-행정통합을 넘어 탄소경제권으로</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2543" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -628,7 +630,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-ep7">
         <a class="row-link" href="./column-ep7.html" aria-label="[탄소중립개론]7. '킬링곡선'이 주는 시사점"></a>
-        <div class="news-media"><div class="tag-mini">킬링곡선 그래프</div></div>
+        <!-- 필요한 사진: 킬링곡선 그래프 --><div class="news-media shot"><img src="images/thumb/column-2.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론]7. '킬링곡선'이 주는 시사점</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2509" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -638,7 +640,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-megacity-symposium">
         <a class="row-link" href="./press-megacity-symposium.html" aria-label="메가시티의 성공 조건, 행정 통합을 넘어 '탄소 경제권'으로 가야 한다"></a>
-        <div class="news-media"><div class="tag-mini">메가시티 심포지엄 이미지</div></div>
+        <!-- 필요한 사진: 메가시티 심포지엄 이미지 --><div class="news-media shot"><img src="images/thumb/column-3.svg" alt="" loading="lazy"></div>
         <div>
           <h3>메가시티의 성공 조건, 행정 통합을 넘어 '탄소 경제권'으로 가야 한다</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span></div>
@@ -648,7 +650,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-ep6">
         <a class="row-link" href="./column-ep6.html" aria-label="[탄소중립개론]6. 화석연료 대체재 '바이오이코노미' 논쟁"></a>
-        <div class="news-media"><div class="tag-mini">에너지 전환 이미지</div></div>
+        <!-- 필요한 사진: 에너지 전환 이미지 --><div class="news-media shot"><img src="images/thumb/column-4.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론]6. 화석연료 대체재 '바이오이코노미' 논쟁</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2488" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -658,7 +660,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="media" id="media-mou">
         <a class="row-link" href="https://www.dt.co.kr/article/12036660" target="_blank" rel="noopener" aria-label="에코피앤씨 등 3개 기관, 데이터기반 탄소솔루션 구축위한 MOU체결 — 디지털타임스"></a>
-        <div class="news-media"><div class="tag-mini">디지털타임스 · 외부링크</div></div>
+        <!-- 필요한 사진: 디지털타임스 · 외부링크 --><div class="news-media shot"><img src="images/thumb/media-1.svg" alt="" loading="lazy"></div>
         <div>
           <h3>에코피앤씨 등 3개 기관, 데이터기반 탄소솔루션 구축위한 MOU체결 — 디지털타임스</h3>
           <div class="news-meta"><span class="tag tag-media">미디어보도</span></div>
@@ -668,7 +670,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="press" id="mou">
         <a class="row-link" href="./press-mou.html" aria-label="베르덱스에이아이·에코피앤씨·뫼비우스자원순환, 데이터 기반 탄소솔루션 구축 3자 업무협약(MOU) 체결"></a>
-        <div class="news-media"><div class="tag-mini">MOU 체결식 사진</div></div>
+        <!-- 필요한 사진: MOU 체결식 사진 --><div class="news-media shot"><img src="images/thumb/press-2.svg" alt="" loading="lazy"></div>
         <div>
           <h3>베르덱스에이아이·에코피앤씨·뫼비우스자원순환, 데이터 기반 탄소솔루션 구축 3자 업무협약(MOU) 체결</h3>
           <div class="news-meta"><span class="tag tag-press">보도자료</span></div>
@@ -678,7 +680,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-dmrv">
         <a class="row-link" href="./column-dmrv-gresham.html" aria-label="[탄소중립개론]5. 환경정책의 '그레샴의 법칙'과 DMRV"></a>
-        <div class="news-media"><div class="tag-mini">굴뚝 대기오염 이미지</div></div>
+        <!-- 필요한 사진: 굴뚝 대기오염 이미지 --><div class="news-media shot"><img src="images/thumb/column-3.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론]5. 환경정책의 '그레샴의 법칙'과 DMRV</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2463" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -688,7 +690,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="press" id="feature">
         <a class="row-link" href="./press-business-intro.html" aria-label="베르덱스 에이아이(주) 업무소개 — "감축은 많은데, 증명은 어렵다""></a>
-        <div class="news-media"><div class="tag-mini">DMRV 모식도</div></div>
+        <!-- 필요한 사진: DMRV 모식도 --><div class="news-media shot"><img src="images/thumb/press-4.svg" alt="" loading="lazy"></div>
         <div>
           <h3>베르덱스 에이아이(주) 업무소개 — "감축은 많은데, 증명은 어렵다"</h3>
           <div class="news-meta"><span class="tag tag-press">보도자료</span></div>
@@ -698,7 +700,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-ep4">
         <a class="row-link" href="./column-ep4.html" aria-label="[탄소중립개론]4. 할인율 'r'에 얽힌 탄소중립"></a>
-        <div class="news-media"><div class="tag-mini">경제학 그래프</div></div>
+        <!-- 필요한 사진: 경제학 그래프 --><div class="news-media shot"><img src="images/thumb/column-1.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론]4. 할인율 'r'에 얽힌 탄소중립</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2441" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -708,7 +710,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-ep3">
         <a class="row-link" href="./column-ep3.html" aria-label="[탄소중립개론]3. '낮게 달린 과일'의 함정"></a>
-        <div class="news-media"><div class="tag-mini">저비용 감축수단 이미지</div></div>
+        <!-- 필요한 사진: 저비용 감축수단 이미지 --><div class="news-media shot"><img src="images/thumb/column-2.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론]3. '낮게 달린 과일'의 함정</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2411" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -718,7 +720,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-ep2">
         <a class="row-link" href="./column-ep2.html" aria-label="[탄소중립개론]2. 탄소중립의 시대, 파리협정은?"></a>
-        <div class="news-media"><div class="tag-mini">파리협정 이미지</div></div>
+        <!-- 필요한 사진: 파리협정 이미지 --><div class="news-media shot"><img src="images/thumb/column-3.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론]2. 탄소중립의 시대, 파리협정은?</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2378" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -728,7 +730,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-ep1">
         <a class="row-link" href="./column-ep1.html" aria-label="[탄소중립개론]1. 기후위기 대응의 진화"></a>
-        <div class="news-media"><div class="tag-mini">굴뚝 온실가스 이미지</div></div>
+        <!-- 필요한 사진: 굴뚝 온실가스 이미지 --><div class="news-media shot"><img src="images/thumb/column-4.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론]1. 기후위기 대응의 진화</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2354" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -738,7 +740,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="column">
         <a class="row-link" href="./column-intro.html" aria-label="[탄소중립개론] 강좌를 시작하며…"></a>
-        <div class="news-media"><div class="tag-mini">탄소중립개론 지도서</div></div>
+        <!-- 필요한 사진: 탄소중립개론 지도서 --><div class="news-media shot"><img src="images/thumb/column-1.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[탄소중립개론] 강좌를 시작하며…</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span><a class="co2-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2314" target="_blank" rel="noopener">· CO2Korea 동시 게재 ↗</a></div>
@@ -748,7 +750,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="media" id="media-review">
         <a class="row-link" href="https://www.co2korea.com/news/articleView.html?idxno=2272" target="_blank" rel="noopener" aria-label="정복영 교수의 '탄소중립개론' 특별강좌를 시작하며 — CO2"></a>
-        <div class="news-media"><div class="tag-mini">CO2 · 외부링크</div></div>
+        <!-- 필요한 사진: CO2 · 외부링크 --><div class="news-media shot"><img src="images/thumb/media-2.svg" alt="" loading="lazy"></div>
         <div>
           <h3>정복영 교수의 '탄소중립개론' 특별강좌를 시작하며 — CO2</h3>
           <div class="news-meta"><span class="tag tag-media">미디어보도</span></div>
@@ -758,7 +760,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="press" id="col-dmrv-policy">
         <a class="row-link" href="./press-policy-response.html" aria-label="국정기획위원회의 "운행차 대기오염·온실가스 통합 감축정책 제안"에 대한 답변과 향후과제"></a>
-        <div class="news-media"><div class="tag-mini">정책 답변 문서</div></div>
+        <!-- 필요한 사진: 정책 답변 문서 --><div class="news-media shot"><img src="images/thumb/press-3.svg" alt="" loading="lazy"></div>
         <div>
           <h3>국정기획위원회의 "운행차 대기오염·온실가스 통합 감축정책 제안"에 대한 답변과 향후과제</h3>
           <div class="news-meta"><span class="tag tag-press">보도자료</span></div>
@@ -768,7 +770,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="press" id="feature-strategy">
         <a class="row-link" href="./press-strategy-report.html" aria-label="Verdex AI가 추구하는 비즈니스 TOP 3 전략보고서(안)"></a>
-        <div class="news-media"><div class="tag-mini">전략보고서 이미지</div></div>
+        <!-- 필요한 사진: 전략보고서 이미지 --><div class="news-media shot"><img src="images/thumb/press-4.svg" alt="" loading="lazy"></div>
         <div>
           <h3>Verdex AI가 추구하는 비즈니스 TOP 3 전략보고서(안)</h3>
           <div class="news-meta"><span class="tag tag-press">보도자료</span></div>
@@ -778,7 +780,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-credit-device">
         <a class="row-link" href="./column-carbon-credit-device.html" aria-label="탄소배출권과 공회전제한장치"></a>
-        <div class="news-media"><div class="tag-mini">공회전제한장치 이미지</div></div>
+        <!-- 필요한 사진: 공회전제한장치 이미지 --><div class="news-media shot"><img src="images/thumb/column-1.svg" alt="" loading="lazy"></div>
         <div>
           <h3>탄소배출권과 공회전제한장치</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span></div>
@@ -788,7 +790,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="media" id="feature-book">
         <a class="row-link" href="https://n.news.naver.com/mnews/article/057/0001896721?sid=103" target="_blank" rel="noopener" aria-label="국내 최초 탄소중립 교과서 『탄소중립개론』 출간"></a>
-        <div class="news-media"><div class="tag-mini">MBN뉴스 · 외부링크</div></div>
+        <!-- 필요한 사진: MBN뉴스 · 외부링크 --><div class="news-media shot"><img src="images/thumb/media-2.svg" alt="" loading="lazy"></div>
         <div>
           <h3>국내 최초 탄소중립 교과서 『탄소중립개론』 출간</h3>
           <div class="news-meta"><span class="tag tag-media">미디어보도</span></div>
@@ -798,7 +800,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="media" id="media-founding">
         <a class="row-link" href="https://www.digitalbizon.com/news/articleView.html?idxno=2340314" target="_blank" rel="noopener" aria-label="정복영 前 자원순환보증금관리센터 이사장 'VerdeX AI 설립' — 디지털비즈온"></a>
-        <div class="news-media"><div class="tag-mini">디지털비즈온 · 외부링크</div></div>
+        <!-- 필요한 사진: 디지털비즈온 · 외부링크 --><div class="news-media shot"><img src="images/thumb/media-3.svg" alt="" loading="lazy"></div>
         <div>
           <h3>정복영 前 자원순환보증금관리센터 이사장 'VerdeX AI 설립' — 디지털비즈온</h3>
           <div class="news-meta"><span class="tag tag-media">미디어보도</span></div>
@@ -808,7 +810,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="media" id="media-interview">
         <a class="row-link" href="https://www.energydaily.co.kr/news/articleView.html?idxno=157215" target="_blank" rel="noopener" aria-label="[인터뷰] "AI로 환경영향평가 혁신"… 20년 환경부 간부 경력 딛고 기후기술 스타트업 창업 — 에너지데일리"></a>
-        <div class="news-media"><div class="tag-mini">에너지데일리 · 외부링크</div></div>
+        <!-- 필요한 사진: 에너지데일리 · 외부링크 --><div class="news-media shot"><img src="images/thumb/media-4.svg" alt="" loading="lazy"></div>
         <div>
           <h3>[인터뷰] "AI로 환경영향평가 혁신"… 20년 환경부 간부 경력 딛고 기후기술 스타트업 창업 — 에너지데일리</h3>
           <div class="news-meta"><span class="tag tag-media">미디어보도</span></div>
@@ -818,7 +820,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-twin-transition">
         <a class="row-link" href="./column-twin-transition.html" aria-label="트윈 트랜지션과 Verdex AI"></a>
-        <div class="news-media"><div class="tag-mini">트윈 트랜지션 이미지</div></div>
+        <!-- 필요한 사진: 트윈 트랜지션 이미지 --><div class="news-media shot"><img src="images/thumb/column-1.svg" alt="" loading="lazy"></div>
         <div>
           <h3>트윈 트랜지션과 Verdex AI</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span></div>
@@ -828,7 +830,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-prisoners">
         <a class="row-link" href="./column-prisoners-dilemma.html" aria-label="기후위기와 죄수의 딜레마 — 왜 국제협력은 어려운가"></a>
-        <div class="news-media"><div class="tag-mini">국제협력 이미지</div></div>
+        <!-- 필요한 사진: 국제협력 이미지 --><div class="news-media shot"><img src="images/thumb/column-2.svg" alt="" loading="lazy"></div>
         <div>
           <h3>기후위기와 죄수의 딜레마 — 왜 국제협력은 어려운가</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span></div>
@@ -838,7 +840,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-fruit">
         <a class="row-link" href="./column-low-hanging-fruit.html" aria-label="탄소중립을 향한 사다리와 '낮게 달린 과일'"></a>
-        <div class="news-media"><div class="tag-mini">저비용 감축수단 이미지</div></div>
+        <!-- 필요한 사진: 저비용 감축수단 이미지 --><div class="news-media shot"><img src="images/thumb/column-3.svg" alt="" loading="lazy"></div>
         <div>
           <h3>탄소중립을 향한 사다리와 '낮게 달린 과일'</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span></div>
@@ -848,7 +850,7 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 
       <div class="news-row" data-cat="column" id="col-carbon-story">
         <a class="row-link" href="./column-carbon-story.html" aria-label="나의 탄소이야기"></a>
-        <div class="news-media"><div class="tag-mini">나의 탄소이야기 이미지</div></div>
+        <!-- 필요한 사진: 나의 탄소이야기 이미지 --><div class="news-media shot"><img src="images/thumb/column-4.svg" alt="" loading="lazy"></div>
         <div>
           <h3>나의 탄소이야기</h3>
           <div class="news-meta"><span class="tag tag-column">칼럼</span></div>

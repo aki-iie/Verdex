@@ -483,6 +483,52 @@ NEWS_JS = """
 })();
 </script>"""
 
+THUMB_CATS = {"column", "press", "media"}
+
+def thumb_for(cat, n):
+    """카테고리 기본 썸네일. 목록 순서대로 4종 변주를 돌려써서
+       같은 카테고리가 연달아도 같은 그림이 이어지지 않게 합니다."""
+    c = cat if cat in THUMB_CATS else "default"
+    return "images/thumb/%s-%d.svg" % (c, n % 4 + 1)
+
+def fill_thumbs(body):
+    """.news-row 의 회색 플레이스홀더를 카테고리 기본 썸네일로 교체.
+       어떤 사진이 필요한지 적어둔 문구는 주석으로 남겨 정보를 잃지 않습니다."""
+    rows = re.split(r'(?=<div class="news-row"|<a class="news-row")', body)
+    out, seq = [], 0
+    for r in rows:
+        m = re.search(r'data-cat="(\w+)"', r)
+        if m or r.lstrip().startswith(("<div class=\"news-row\"", "<a class=\"news-row\"")):
+            # data-cat 이 없는 외부 글 목록(대표의 다른 글)은 칼럼으로 봅니다
+            cat = m.group(1) if m else "column"
+            src = thumb_for(cat, seq)
+            seq += 1
+            r = re.sub(
+                r'<div class="news-media"><div class="tag-mini">(.*?)</div></div>',
+                lambda x: ('<!-- 필요한 사진: %s -->'
+                           '<div class="news-media shot"><img src="%s" alt="" loading="lazy"></div>'
+                           % (x.group(1).replace("<br>", " ").strip(), src)),
+                r, flags=re.S)
+        out.append(r)
+    return "".join(out)
+
+def fill_home_cards(body):
+    """홈의 최신 소식 카드 3장도 카테고리 썸네일로."""
+    def one(m):
+        blk = m.group(0)
+        cat = "press"
+        for k in ("column", "media", "press"):
+            if 'tag-%s' % k in blk:
+                cat = k; break
+        need = re.search(r'<div class="placeholder-tag">(.*?)</div>', blk, re.S)
+        note = '<!-- 필요한 사진: %s -->' % (need.group(1).strip() if need else "")
+        one.n = getattr(one, "n", -1) + 1
+        return re.sub(r'<div class="biz-media">.*?</div>\s*</div>',
+                      note + '<div class="biz-media shot"><img src="%s" alt="" loading="lazy"></div>'
+                      % thumb_for(cat, one.n),
+                      blk, count=1, flags=re.S)
+    return re.sub(r'<a class="biz-card".*?</a>', one, body, flags=re.S)
+
 def fix_body(f, body):
     # 위치 페이지: 목업의 깨진 iframe src 복구
     if f == "location.html":
@@ -498,6 +544,10 @@ def fix_body(f, body):
     body = re.sub(r'font-size:1[1-3](\.\d)?px', 'font-size:var(--fs-small)', body)
     body = body.replace('font-size:14.5px','font-size:var(--fs-small)').replace('font-size:15.5px','font-size:var(--fs-body)')
     body = re.sub(r'font-size:(19|20)px', 'font-size:var(--fs-h3)', body)
+    if 'class="news-row"' in body:
+        body = fill_thumbs(body)
+    if 'class="home-news"' in body:
+        body = fill_home_cards(body)
     # 흰 배경 위 <section> 교차 톤: 두 번째 섹션마다 연한 배경 (콘텐츠 페이지 리듬)
     return body
 
@@ -627,11 +677,9 @@ def newsroom_items():
 
 def wp_news_rows(posts):
     rows = []
-    for p in posts:
-        if p.get("image"):
-            media = '<div class="news-media shot"><img src="%s" alt=""></div>' % p["image"]
-        else:
-            media = '<div class="news-media"><div class="tag-mini">%s</div></div>' % esc(p["cat_label"])
+    for _i, p in enumerate(posts):
+        img = p.get("image") or thumb_for(p["cat"], _i)
+        media = ('<div class="news-media shot"><img src="%s" alt="" loading="lazy"></div>' % img)
         ext = is_external(p)
         src = ""
         if p.get("source"):
@@ -690,6 +738,7 @@ else:
 # ── 홈 ──────────────────────────────────────────────────────────────────────
 top   = (SHELL/"home-top.html").read_text(encoding="utf-8")
 lower = (SHELL/"home-lower.html").read_text(encoding="utf-8")
+lower = fill_home_cards(lower)   # 홈 최신 소식 카드도 기본 썸네일
 (OUT/"index.html").write_text(
     page_html("Verdex AI — 탄소는 비용이 아니라, 자산입니다", "", homecss, top, lower,
               f"\n<script>\n{homejs}</script>"), encoding="utf-8")

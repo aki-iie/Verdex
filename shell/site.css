@@ -163,6 +163,8 @@ main p{font-size:var(--fs-body);line-height:1.85}
 .overview-media,.expertise-media,.cap-media{aspect-ratio:4/3}
 .biz-media{aspect-ratio:16/10}
 .news-media{width:clamp(96px,10vw,180px);aspect-ratio:4/3;flex:none;border-radius:6px}
+.news-media.shot,.biz-media.shot{border:0;background:none}
+.news-media.shot img,.biz-media.shot img{width:100%;height:100%;object-fit:cover;display:block}
 .ceo-portrait{aspect-ratio:3/4;border-radius:12px}
 .sig-image{width:clamp(140px,14vw,240px);height:clamp(60px,6vw,96px);border-radius:6px}
 
