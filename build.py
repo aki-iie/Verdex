@@ -74,7 +74,6 @@ def hero_photo(f, m):
     {eyebrow}
     <h1>{BAND_TITLE.get(f, re.sub("<.*?>","",m["h1"]))}</h1>
     {lede}
-    {subtabs_html(m["subtabs"])}
   </div>
 </section>'''
 
@@ -90,7 +89,6 @@ def hero_band(f, m):
     {top}
     <h1>{BAND_TITLE.get(f, re.sub("<.*?>","",m["h1"]))}</h1>
     {lede}{by}{upd}
-    {subtabs_html(m["subtabs"])}
   </div>
 </section>'''
 
@@ -109,13 +107,39 @@ def hero_subbar(f, m):
   </svg>
   <div class="wrap">
     <span class="sb-title">{SEC_LABEL.get(section_of(f), "")}</span>
-    {subtabs_html(m["subtabs"])}
+    {sec_subtabs(f)}
   </div>
 </div>'''
 
 SUBBAR = {"about-overview.html", "about-leadership.html", "about-history.html", "location.html"}
-BAND_TITLE = {"about-overview.html": "개요"}
+BAND_TITLE = {"about-overview.html":"개요", "business-overview.html":"개요",
+              "news.html":"뉴스·보도", "resources.html":"자료실",
+              "careers.html":"채용 안내", "contact.html":"문의하기"}
 SEC_LABEL = {"about":"회사 소개","business":"사업 분야","news":"뉴스룸","resources":"자료","careers":"채용","contact":"문의"}
+
+# 챕터별 서브탭 — 회사 소개와 동일한 UI를 모든 메뉴에 적용
+SEC_TABS = {
+ "about":    [("./about-overview.html","개요"), ("./about-leadership.html","리더십"),
+              ("./about-history.html","연혁"), ("./location.html","오시는 길")],
+ "business": [("./business-overview.html","개요"), ("./service-impact-assessment.html","AI 환경영향평가"),
+              ("./service-carbon-neutrality.html","탄소중립 전략"), ("./service-esg.html","ESG·지속가능성"),
+              ("./service-smart-energy.html","스마트 에너지"), ("./service-circular-economy.html","순환경제")],
+ "news":     [("./news.html","뉴스·보도"), ("./columns-other.html","대표의 다른 글")],
+ "resources":[("./resources.html","자료실"), ("./resource-cbam-report-example.html","CBAM 보고서 예시"),
+              ("./resource-eu-compliance-playbook.html","EU 규제 플레이북")],
+ "careers":  [("./careers.html","채용 안내")],
+ "contact":  [("./contact.html","문의하기"), ("./faq.html","FAQ")],
+}
+
+def sec_subtabs(f):
+    tabs = SEC_TABS.get(section_of(f), [])
+    if not tabs:
+        return ""
+    out = []
+    for h, t in tabs:
+        act = ' class="active"' if h == "./" + f else ''
+        out.append('<a href="%s"%s>%s</a>' % (h, act, t))
+    return '<div class="subtabs">' + "".join(out) + "</div>"
 
 
 HIST_CSS = """
@@ -214,7 +238,7 @@ LEADER_CSS = """
      본문 글자 크기(var(--fs-body))는 그대로 두고 줄간격·여백만 조인다. */
   .lead{background:var(--paper);padding:min(2.8vh,36px) 0;
     height:calc(100svh - var(--hh) - var(--sbh));display:flex;align-items:center}
-  .lead-grid{display:grid;grid-template-columns:min(30vh,300px) 1fr;
+  .lead-grid{display:grid;grid-template-columns:min(27vh,272px) minmax(0,1fr) min(29vh,296px);
     gap:clamp(24px,3.2vw,60px);align-items:start;max-width:none;width:100%}
   .portrait{margin:0}
   .portrait img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 22%;
@@ -236,22 +260,46 @@ LEADER_CSS = """
     font-size:min(var(--fs-small),1.7vh);color:#8C9A8E}
   .sign-who{display:flex;flex-direction:column;gap:2px;font-size:min(var(--fs-small),1.7vh);color:var(--muted)}
   .sign-who b{font-size:min(var(--fs-h3),2.4vh);font-weight:800;letter-spacing:-.02em;color:var(--ink)}
-  .career{padding-block:clamp(44px,5.2vw,104px)}
-  .career-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.2vw,40px);
-    margin-top:clamp(28px,3.2vw,56px)}
-  .career-grid div{border-top:2px solid var(--navy);padding-top:clamp(12px,1.5vw,20px)}
-  .career-grid b{display:block;font-size:var(--fs-h3);font-weight:800;letter-spacing:-.02em;color:var(--navy)}
-  .career-grid span{display:block;margin-top:8px;font-size:var(--fs-small);color:var(--muted)}
-  .career-link{display:inline-block;margin-top:clamp(26px,2.8vw,44px);font-family:var(--mono);
-    font-size:var(--fs-small);font-weight:700;letter-spacing:.05em;color:var(--brand)}
+  /* 오른쪽 약력 레일 (A안 — 잎맥 노드 타임라인) */
+  .rail{align-self:stretch;border-left:1px solid var(--line);
+    padding-left:clamp(18px,1.9vw,36px);display:flex;flex-direction:column}
+  .rail .eyebrow{font-size:min(var(--fs-eyebrow),1.7vh)}
+  .rail h2{margin-top:min(1.1vh,12px);font-size:min(clamp(17px,1.5vw,28px),2.9vh);
+    font-weight:900;letter-spacing:-.03em;color:var(--navy);line-height:1.25}
+  .rail-list{--rp:clamp(16px,1.3vw,26px);position:relative;
+    margin-top:min(2.3vh,28px);padding-left:var(--rp)}
+  .rail-list::before{content:"";position:absolute;left:3px;top:.7em;bottom:.7em;width:1px;
+    background:linear-gradient(180deg,var(--brand-lift),rgba(127,209,168,.22))}
+  .rail-list li{position:relative;padding-bottom:min(2.4vh,28px)}
+  .rail-list li:last-child{padding-bottom:0}
+  .rail-list li::before{content:"";position:absolute;left:calc(var(--rp) * -1);top:.62em;width:7px;height:7px;
+    border-radius:50%;background:var(--brand);box-shadow:0 0 0 3.5px var(--paper)}
+  .rail-list b{display:block;font-size:min(var(--fs-h3),2.35vh);font-weight:800;
+    letter-spacing:-.02em;color:var(--navy);line-height:1.34}
+  .rail-list span{display:block;margin-top:3px;font-size:min(var(--fs-small),1.65vh);color:var(--muted)}
+  .career-link{display:inline-block;margin-top:min(2.6vh,30px);font-family:var(--mono);
+    font-size:min(var(--fs-small),1.65vh);font-weight:700;letter-spacing:.05em;color:var(--brand)}
+  .career-link:hover{color:var(--cta-hover)}
+
+  @media (max-width:1240px){
+    .lead-grid{grid-template-columns:min(26vh,250px) minmax(0,1fr)}
+    .rail{grid-column:1 / -1;border-left:0;border-top:1px solid var(--line);
+      padding-left:0;padding-top:min(2.2vh,26px);margin-top:min(1.4vh,18px)}
+    .rail-list{margin-top:min(1.8vh,22px);padding-left:0;
+      display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.8vw,30px)}
+    .rail-list::before{display:none}
+    .rail-list li{padding:min(1vh,12px) 0 0;border-top:2px solid var(--navy)}
+    .rail-list li::before{display:none}
+    .career-link{margin-top:min(2vh,22px)}
+  }
   @media (max-width:900px){
     .lead{height:auto;display:block;padding-block:34px 40px}
     .lead-grid{grid-template-columns:1fr;gap:24px}
     .portrait img{max-width:360px}
     .say blockquote{font-size:clamp(21px,5.2vw,30px)}
-    .career-grid{grid-template-columns:repeat(2,1fr)}
+    .rail-list{grid-template-columns:repeat(2,1fr)}
   }
-  @media (max-width:560px){ .career-grid{grid-template-columns:1fr} }
+  @media (max-width:560px){ .rail-list{grid-template-columns:1fr;gap:14px} }
 """
 
 ABOUT_CSS = """
@@ -358,12 +406,13 @@ def page_html(title, sec, extra_css, hero, body, extra_js=""):
 for f, m in pages.items():
     body = (SRC/f).read_text(encoding="utf-8")
     body = fix_body(f, body)
+    bar = hero_subbar(f, m) if section_of(f) else ""
     if f in SUBBAR:
-        hero = hero_subbar(f, m)
+        hero = bar
     elif f in PHOTO:
-        hero = hero_photo(f, m)
+        hero = bar + hero_photo(f, m)
     else:
-        hero = hero_band(f, m)
+        hero = bar + hero_band(f, m)
     if not body.lstrip().startswith("<main"):
         body = "<main>\n" + body + "\n</main>"
     extra_js = NEWS_JS if f == "news.html" else ""

@@ -441,7 +441,10 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 .subbar .wrap{position:relative;z-index:1;max-width:none;height:100%;display:flex;align-items:center;
   gap:clamp(14px,3vw,48px)}
 .sb-title{font-size:var(--fs-h3);font-weight:800;letter-spacing:-.02em;color:#fff;white-space:nowrap}
-.subbar .subtabs{margin:0;display:flex;flex-wrap:wrap;gap:clamp(6px,.8vw,12px)}
+.subbar .subtabs{margin:0;display:flex;flex-wrap:nowrap;gap:clamp(6px,.8vw,12px);
+  overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;min-width:0}
+.subbar .subtabs::-webkit-scrollbar{display:none}
+.subbar .subtabs a{flex:none;white-space:nowrap}
 .subbar .subtabs a{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);
   color:rgba(255,255,255,.82);padding:.5em 1.15em;border-radius:999px;
   font-size:var(--fs-small);font-weight:600;
@@ -450,7 +453,16 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 .subbar .subtabs a.active{background:var(--mint);border-color:var(--mint);color:var(--navy)}
 @media (max-width:700px){ :root{--sbh:96px}
   .subbar .wrap{flex-direction:column;align-items:flex-start;justify-content:center;gap:9px}
-  .subbar .sb-vein{display:none} }
+  .subbar .sb-vein{display:none}
+  /* 탭이 옆으로 더 있다는 신호 */
+  .subbar::after{content:"";position:absolute;right:0;top:0;bottom:0;width:40px;z-index:2;
+    pointer-events:none;background:linear-gradient(90deg,rgba(10,58,99,0),var(--navy))} }
+
+/* 서브바가 앞에 붙은 히어로 — 헤더 높이만큼의 위 여백을 서브바가 이미 먹었으므로 뺀다 */
+.subbar + .phero{min-height:clamp(320px,50svh,620px)}
+.subbar + .phero .wrap{padding-top:calc(var(--u)*5)}
+.subbar + .phero .slot{top:calc(var(--u)*2)}
+.subbar + .bhero .wrap{padding-top:clamp(26px,3.2vw,58px)}
 
 </style>
 </head>
@@ -514,12 +526,26 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
   <a href="./faq.html">FAQ</a>
 </nav>
 
-<section class="bhero" data-theme="dark">
+<div class="subbar">
+  <svg class="sb-vein" viewBox="0 0 320 56" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+    <g stroke="#7FD1A8" fill="none" stroke-linecap="round" opacity=".5">
+      <path d="M340,50 C288,45 236,36 186,22" stroke-width="1.4"/>
+      <path d="M262,41 C260,30 264,21 272,12" stroke-width="1"/>
+      <path d="M212,30 C210,22 214,15 222,8" stroke-width="1"/>
+    </g>
+    <g fill="#C7F2D6" opacity=".85">
+      <circle cx="272" cy="12" r="2.4"/><circle cx="222" cy="8" r="2"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <span class="sb-title">뉴스룸</span>
+    <div class="subtabs"><a href="./news.html">뉴스·보도</a><a href="./columns-other.html">대표의 다른 글</a></div>
+  </div>
+</div><section class="bhero" data-theme="dark">
   <div class="wrap">
     <div class="crumb"><a href="./news.html">뉴스룸</a> / <a href="./news.html#column">칼럼</a></div>
     <h1>[탄소중립개론] 5. 환경정책의 '그레샴의 법칙'과 DMRV</h1>
     <div class="byline"><span class="author">정복영</span> <span>대표 · Verdex AI</span> <a class="syndicate-badge" href="https://www.co2korea.com/news/articleView.html?idxno=2463" target="_blank" rel="noopener">CO2Korea 동시 게재 ↗</a></div>
-    
   </div>
 </section>
 <main>
