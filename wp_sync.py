@@ -30,6 +30,10 @@ CAT_MAP = {
 }
 CAT_DEFAULT = ("press", "보도자료")
 
+# 저작권 — 미디어보도(외부 언론사 기사)는 전문을 절대 가져오지 않습니다.
+# 제목·출처·날짜와 원문 링크만 저장하고, 본문은 비워 둡니다.
+NO_FULLTEXT = {"media"}
+
 # 본문에서 통째로 지울 것들 (Visual Composer 찌꺼기·스크립트·빈 껍데기)
 DROP_BLOCKS = re.compile(
     r"<(script|style|iframe|noscript)\b.*?</\1>", re.S | re.I)
@@ -73,6 +77,15 @@ def clean_html(html):
     h = re.sub(r'\s(style|class|id|width|height|srcset|sizes|loading|data-[\w-]+)="[^"]*"', "", h)
     h = re.sub(r"(<p>\s*(&nbsp;)?\s*</p>)+", "", h)
     return re.sub(r"\n{3,}", "\n\n", h).strip()
+
+
+def first_external_link(html):
+    """미디어보도 글에서 언론사 원문 URL 을 찾아냅니다."""
+    for m in re.finditer(r'href="(https?://[^"]+)"', html or ""):
+        u = m.group(1)
+        if "verdex.kr" not in u:
+            return u
+    return None
 
 
 def download(url, session_seen):
@@ -131,6 +144,8 @@ def main():
         if media and not args.no_images:
             img_rel, _ = download(media[0].get("source_url"), seen)
             img_alt = strip_tags(media[0].get("alt_text") or p["title"]["rendered"])
+        content = p["content"]["rendered"]
+        external = first_external_link(content) if cat in NO_FULLTEXT else None
         posts.append({
             "id":       p["id"],
             "date":     p["date"][:10],
@@ -142,9 +157,12 @@ def main():
             "wp_link":  p["link"],
             "image":    img_rel,
             "image_alt": img_alt,
-            "html":     clean_html(p["content"]["rendered"]),
+            # 미디어보도는 본문을 저장하지 않습니다 (언론사 저작권)
+            "html":     "" if cat in NO_FULLTEXT else clean_html(content),
+            "external_url": external or (p["link"] if cat in NO_FULLTEXT else None),
         })
-        print(f"  · {p['date'][:10]}  [{label}] {posts[-1]['title'][:52]}")
+        mark = " ↗외부링크" if cat in NO_FULLTEXT else ""
+        print(f"  · {p['date'][:10]}  [{label}]{mark} {posts[-1]['title'][:48]}")
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(posts, ensure_ascii=False, indent=1), encoding="utf-8")

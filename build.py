@@ -30,6 +30,11 @@ homejs = (SHELL/"home.js").read_text(encoding="utf-8")
 WP_NEWSROOM = False
 WP_FILE  = ROOT/"content"/"wp-posts.json"
 WP_POSTS = json.load(open(WP_FILE, encoding="utf-8")) if WP_FILE.exists() else []
+# 아직 verdex.kr 에 없고 외부(CO2Korea 등)에만 있는 글 — 뉴스룸 목록에만 올립니다.
+EXT_FILE = ROOT/"content"/"external.json"
+EXT_ITEMS = json.load(open(EXT_FILE, encoding="utf-8")) if EXT_FILE.exists() else []
+# 미디어보도(외부 언론사 기사)는 전문을 호스팅하지 않습니다 — 저작권
+NO_FULLTEXT = {"media"}
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
@@ -495,6 +500,8 @@ WP_CSS = """
     font-weight:700;letter-spacing:.05em;color:var(--brand)}
   .back-link:hover{color:var(--cta-hover)}
   .wp-empty{padding:clamp(40px,5vw,90px) 0;text-align:center;color:var(--muted);font-size:var(--fs-body)}
+  .news-src{font-family:var(--mono);font-size:var(--fs-small);font-weight:500;
+    letter-spacing:.04em;color:var(--sky)}
 """
 
 def esc(s):
@@ -525,15 +532,39 @@ def wp_post_page(p):
                        encoding="utf-8")
     return f
 
-ROW_TPL = """      <div class="news-row" data-cat="{cat}" id="wp-{id}">
-        <a class="row-link" href="./post-{id}.html" aria-label="{alt}"></a>
+ROW_TPL = """      <div class="news-row" data-cat="{cat}" id="{rid}">
+        <a class="row-link" href="{href}"{ext} aria-label="{alt}"></a>
         {media}
         <div>
           <h3>{title}</h3>
-          <div class="news-meta"><span class="tag tag-{cat}">{label}</span></div>
+          <div class="news-meta"><span class="tag tag-{cat}">{label}</span>{src}</div>
         </div>
         <span class="news-date">{date}</span>
       </div>"""
+
+def is_external(p):
+    """전문을 우리가 호스팅하지 않는 항목 — 목록에서 바로 원문으로 보냅니다."""
+    return p["cat"] in NO_FULLTEXT or p.get("external_only")
+
+def row_href(p):
+    if is_external(p):
+        return p.get("external_url") or p.get("wp_link") or "#"
+    return "./post-%s.html" % p["id"]
+
+def newsroom_items():
+    """워드프레스 글 + 외부 전용 항목을 한 목록으로.
+       '게시 예정'(날짜 없음)을 맨 위에, 나머지는 날짜 내림차순."""
+    items = list(WP_POSTS)
+    for i, e in enumerate(EXT_ITEMS):
+        e = dict(e)
+        e.setdefault("id", "ext%d" % i)
+        e.setdefault("date", "")
+        e["external_only"] = True
+        items.append(e)
+    pending = [i for i in items if not i.get("date")]          # 게시 예정 — 맨 위
+    dated   = sorted([i for i in items if i.get("date")],
+                     key=lambda i: i["date"], reverse=True)     # 나머지 최신순
+    return pending + dated
 
 def wp_news_rows(posts):
     rows = []
@@ -542,9 +573,18 @@ def wp_news_rows(posts):
             media = '<div class="news-media shot"><img src="%s" alt=""></div>' % p["image"]
         else:
             media = '<div class="news-media"><div class="tag-mini">%s</div></div>' % esc(p["cat_label"])
-        rows.append(ROW_TPL.format(cat=p["cat"], id=p["id"], alt=esc(p["title"]),
-                                   media=media, title=esc(p["title"]),
-                                   label=esc(p["cat_label"]), date=p["date"].replace("-", ".")))
+        ext = is_external(p)
+        src = ""
+        if p.get("source"):
+            src = '<span class="news-src">%s ↗</span>' % esc(p["source"])
+        elif ext:
+            src = '<span class="news-src">원문 ↗</span>'
+        rows.append(ROW_TPL.format(
+            cat=p["cat"], rid="wp-%s" % p["id"], href=row_href(p),
+            ext=' target="_blank" rel="noopener"' if ext else "",
+            alt=esc(p["title"]), media=media, title=esc(p["title"]),
+            label=esc(p["cat_label"]), src=src,
+            date=p.get("date_label") or (p["date"].replace("-", ".") if p.get("date") else "게시 예정")))
     return "\n\n".join(rows) or ('<div class="wp-empty">아직 가져온 글이 없습니다. '
                                  '<code>python3 wp_sync.py</code> 를 먼저 실행하세요.</div>')
 
@@ -577,12 +617,13 @@ def wp_newsroom(fname, posts):
     (OUT/fname).write_text(page_html("뉴스룸 — Verdex AI", "news", WP_CSS, hero, body, NEWS_JS),
                            encoding="utf-8")
 
-if WP_POSTS:
-    for _p in WP_POSTS:
-        wp_post_page(_p)
+if WP_POSTS or EXT_ITEMS:
+    _made = [wp_post_page(_p) for _p in WP_POSTS if not is_external(_p)]
+    _items = newsroom_items()
     _target = "news.html" if WP_NEWSROOM else "news-live.html"
-    wp_newsroom(_target, WP_POSTS)
-    print("  워드프레스 글 %d개 → post-*.html + %s" % (len(WP_POSTS), _target))
+    wp_newsroom(_target, _items)
+    print("  뉴스룸 %d건 → 전문 %d건(post-*.html) · 외부링크 %d건 → %s"
+          % (len(_items), len(_made), len(_items) - len(_made), _target))
 else:
     print("  (content/wp-posts.json 없음 — python3 wp_sync.py 를 먼저 실행하면 워드프레스 글이 붙습니다)")
 
