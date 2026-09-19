@@ -143,18 +143,22 @@ def sec_subtabs(f):
 
 
 HIST_CSS = """
-  .hist{padding-block:clamp(44px,5vw,100px)}
-  .tl{margin-top:clamp(34px,4vw,72px);display:flex;flex-direction:column;gap:clamp(30px,3.4vw,64px)}
+  .hist{padding:min(3.6vh,46px) 0 clamp(44px,5vw,100px)}
+  .hist .section-head{margin-bottom:min(3.4vh,42px)}
+  .tl{margin-top:min(3.4vh,44px);display:flex;flex-direction:column;gap:clamp(30px,3.4vw,64px)}
   .tl-group{display:grid;grid-template-columns:minmax(96px,168px) 1fr;gap:clamp(18px,3vw,56px)}
-  .tl-year span{position:sticky;top:calc(var(--hh) + 82px);display:block;
+  .tl-year span{position:sticky;top:calc(var(--hh) + var(--sbh) + clamp(16px,1.8vw,30px));display:block;
     font-family:var(--mono);font-size:clamp(22px,2.2vw,40px);font-weight:700;
     letter-spacing:-.01em;color:var(--navy);line-height:1}
-  .tl-items{position:relative;border-left:1px solid var(--line);
+  .tl-items{position:relative;border-left:1px solid transparent;
     display:flex;flex-direction:column;gap:clamp(24px,2.8vw,48px)}
+  /* 리더십 레일(A안)과 같은 잎맥 축 */
+  .tl-items::before{content:"";position:absolute;left:-1px;top:.45em;bottom:.45em;width:1px;
+    background:linear-gradient(180deg,var(--brand-lift) 0%,rgba(127,209,168,.25) 100%)}
   .tl-card{position:relative;padding-left:clamp(20px,2.4vw,40px)}
   .tl-card::before{content:"";position:absolute;left:-5px;top:7px;width:9px;height:9px;border-radius:50%;
-    background:var(--navy);box-shadow:0 0 0 5px #fff}
-  .tl-card.ahead::before,.tl-card.founding::before{background:var(--brand)}
+    background:var(--brand);box-shadow:0 0 0 5px #fff}
+  .tl-card.founding::before{background:#1F6B2B}
   .tl-card.founding::before{width:13px;height:13px;left:-7px;top:5px}
   .tl-date{font-family:var(--mono);font-size:var(--fs-small);font-weight:500;
     letter-spacing:.08em;color:var(--muted)}
@@ -188,12 +192,19 @@ HIST_CSS = """
 """
 
 LOC_CSS = """
-  .loc{padding-block:clamp(44px,5vw,100px)}
+  .loc{padding:min(2.4vh,30px) 0;height:calc(100svh - var(--hh) - var(--sbh));
+    display:flex;align-items:center}
+  .loc>.wrap{width:100%}
+  .loc .section-head{margin-bottom:min(1.7vh,20px)}
+  .loc .section-head h2{margin-top:min(1.2vh,14px);font-size:min(var(--fs-h2),5vh)}
+  .loc .section-head p{margin-top:min(1.2vh,14px);
+    font-size:min(var(--fs-body),2.05vh);line-height:1.8}
+  .loc .eyebrow{font-size:min(var(--fs-eyebrow),1.7vh)}
   .loc-lede{max-width:56ch;font-size:clamp(15px,1.12vw,20px);line-height:1.9;color:var(--muted)}
-  .loc .loc-top{margin-top:clamp(26px,3vw,52px)}
-  .loc-top{margin-top:clamp(30px,3.6vw,64px);display:grid;
+  .loc .loc-top{margin-top:0}
+  .loc-top{margin-top:0;display:grid;height:min(26vh,320px);
     grid-template-columns:1.85fr 1fr;gap:clamp(16px,1.8vw,30px);align-items:stretch}
-  .map-slot{position:relative;margin:0;aspect-ratio:16/9;border-radius:6px;overflow:hidden;
+  .map-slot{position:relative;margin:0;height:100%;border-radius:6px;overflow:hidden;
     border:1.5px dashed #C3CDC2;display:grid;place-items:center;
     background:
       repeating-linear-gradient(0deg,rgba(10,58,99,.055) 0 1px,transparent 1px 46px),
@@ -206,27 +217,40 @@ LOC_CSS = """
   .map-ring{position:absolute;left:50%;top:46%;width:clamp(56px,5.4vw,84px);aspect-ratio:1;
     transform:translate(-50%,-50%);border-radius:50%;
     border:1.5px solid rgba(46,139,58,.5);background:rgba(46,139,58,.08)}
-  .loc-shots{display:grid;grid-template-rows:1fr 1fr;gap:clamp(16px,1.8vw,30px)}
+  .loc-shots{display:grid;height:100%;grid-template-rows:1fr 1fr;gap:clamp(16px,1.8vw,30px)}
   .shot-slot{margin:0;border-radius:6px;border:1.5px dashed #C3CDC2;background:#F1F4F0;
     display:grid;place-items:center;text-align:center;line-height:1.8;
-    font-size:var(--fs-small);color:#8C9A8E;padding:12px;min-height:118px}
-  .loc-btns{margin-top:clamp(20px,2.2vw,34px);display:flex;gap:10px;flex-wrap:wrap}
+    font-size:min(var(--fs-small),1.6vh);color:#8C9A8E;padding:12px;min-height:0}
+  .loc-btns{margin-top:min(1.6vh,18px);display:flex;gap:9px;flex-wrap:wrap}
   .lbtn{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:3px;
-    padding:.8em 1.5em;font-size:var(--fs-small);font-weight:700;color:var(--muted);
+    padding:.72em 1.4em;font-size:min(var(--fs-small),1.7vh);font-weight:700;color:var(--muted);
     transition:border-color .25s,color .25s,background-color .25s}
   .lbtn:hover{border-color:var(--brand);color:var(--brand)}
   .lbtn.primary{background:var(--cta);border-color:var(--cta);color:#fff}
   .lbtn.primary:hover{background:var(--cta-hover);border-color:var(--cta-hover);color:#fff}
-  .loc-grid{margin-top:clamp(34px,4vw,72px);display:grid;grid-template-columns:repeat(4,1fr);
-    gap:clamp(16px,2.2vw,40px)}
-  .loc-grid>div{border-top:2px solid var(--navy);padding-top:clamp(12px,1.5vw,20px)}
-  .loc-grid b{display:block;font-family:var(--mono);font-size:var(--fs-small);font-weight:700;
+  .loc-grid{margin-top:min(1.7vh,20px);display:grid;grid-template-columns:repeat(4,1fr);
+    gap:clamp(14px,1.9vw,34px)}
+  .loc-grid>div{border-top:2px solid var(--navy);padding-top:min(1.4vh,16px)}
+  .loc-grid b{display:block;font-family:var(--mono);font-size:min(var(--fs-small),1.6vh);font-weight:700;
     letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
-  .loc-grid p{margin-top:10px;font-size:var(--fs-h3);font-weight:700;letter-spacing:-.02em;
-    color:var(--navy);line-height:1.6}
-  .loc-grid span{display:block;margin-top:8px;font-size:var(--fs-small);line-height:1.8;color:var(--muted)}
+  .loc-grid p{margin-top:min(.8vh,9px);font-size:min(var(--fs-h3),2.05vh);font-weight:700;
+    letter-spacing:-.02em;color:var(--navy);line-height:1.45}
+  .loc-grid span{display:block;margin-top:min(.7vh,8px);font-size:min(var(--fs-small),1.6vh);
+    line-height:1.72;color:var(--muted)}
+  @media (max-width:1100px){
+    .loc{height:auto;display:block;padding-block:min(3vh,34px) clamp(44px,5vw,90px)}
+    .loc-top{height:auto}
+    .map-slot{height:auto;aspect-ratio:16/9}
+    .loc-shots{height:auto}
+    .shot-slot{min-height:110px}
+    .loc-grid{grid-template-columns:repeat(2,1fr)}
+  }
   @media (max-width:900px){
-    .loc-top{grid-template-columns:1fr}
+    .loc{height:auto;display:block;padding-block:34px 44px}
+    .loc-top{height:auto;grid-template-columns:1fr}
+    .map-slot{height:auto;aspect-ratio:16/9}
+    .loc-shots{height:auto}
+    .shot-slot{min-height:118px}
     .loc-shots{grid-template-rows:none;grid-template-columns:1fr 1fr}
     .loc-grid{grid-template-columns:repeat(2,1fr)}
   }

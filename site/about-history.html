@@ -465,18 +465,22 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
 .subbar + .bhero .wrap{padding-top:clamp(26px,3.2vw,58px)}
 
 
-  .hist{padding-block:clamp(44px,5vw,100px)}
-  .tl{margin-top:clamp(34px,4vw,72px);display:flex;flex-direction:column;gap:clamp(30px,3.4vw,64px)}
+  .hist{padding:min(3.6vh,46px) 0 clamp(44px,5vw,100px)}
+  .hist .section-head{margin-bottom:min(3.4vh,42px)}
+  .tl{margin-top:min(3.4vh,44px);display:flex;flex-direction:column;gap:clamp(30px,3.4vw,64px)}
   .tl-group{display:grid;grid-template-columns:minmax(96px,168px) 1fr;gap:clamp(18px,3vw,56px)}
-  .tl-year span{position:sticky;top:calc(var(--hh) + 82px);display:block;
+  .tl-year span{position:sticky;top:calc(var(--hh) + var(--sbh) + clamp(16px,1.8vw,30px));display:block;
     font-family:var(--mono);font-size:clamp(22px,2.2vw,40px);font-weight:700;
     letter-spacing:-.01em;color:var(--navy);line-height:1}
-  .tl-items{position:relative;border-left:1px solid var(--line);
+  .tl-items{position:relative;border-left:1px solid transparent;
     display:flex;flex-direction:column;gap:clamp(24px,2.8vw,48px)}
+  /* 리더십 레일(A안)과 같은 잎맥 축 */
+  .tl-items::before{content:"";position:absolute;left:-1px;top:.45em;bottom:.45em;width:1px;
+    background:linear-gradient(180deg,var(--brand-lift) 0%,rgba(127,209,168,.25) 100%)}
   .tl-card{position:relative;padding-left:clamp(20px,2.4vw,40px)}
   .tl-card::before{content:"";position:absolute;left:-5px;top:7px;width:9px;height:9px;border-radius:50%;
-    background:var(--navy);box-shadow:0 0 0 5px #fff}
-  .tl-card.ahead::before,.tl-card.founding::before{background:var(--brand)}
+    background:var(--brand);box-shadow:0 0 0 5px #fff}
+  .tl-card.founding::before{background:#1F6B2B}
   .tl-card.founding::before{width:13px;height:13px;left:-7px;top:5px}
   .tl-date{font-family:var(--mono);font-size:var(--fs-small);font-weight:500;
     letter-spacing:.08em;color:var(--muted)}
