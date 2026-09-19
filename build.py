@@ -36,6 +36,61 @@ EXT_ITEMS = json.load(open(EXT_FILE, encoding="utf-8")) if EXT_FILE.exists() els
 # 미디어보도(외부 언론사 기사)는 전문을 호스팅하지 않습니다 — 저작권
 NO_FULLTEXT = {"media"}
 
+# ── 회사 정보 주입 (content/company.json) ────────────────────────────────────
+CO_FILE = ROOT/"content"/"company.json"
+CO = json.load(open(CO_FILE, encoding="utf-8")) if CO_FILE.exists() else {}
+PENDING = []   # 회사 확인 대기 항목
+
+def todo(label):
+    PENDING.append(label)
+    return '<mark class="todo">[회사 확인 대기 — %s]</mark>' % label
+
+def legal_fill(body):
+    """privacy.html 의 {{토큰}} 을 company.json 값으로 치환.
+       값이 비어 있으면 주황색 '확인 대기' 표시를 남겨 그대로 공개되지 않게 합니다."""
+    v = {}
+    v["보유기간"]   = CO.get("개인정보_보유기간") or todo("보유 기간")
+    v["전화"]       = CO.get("전화") or todo("대표 전화")
+    v["보호책임자"] = CO.get("개인정보보호책임자") or todo("보호책임자 이름·직위")
+    v["시행일"]     = CO.get("방침_시행일") or todo("방침 시행일")
+
+    email = CO.get("개인정보_문의_이메일")
+    if email in (None, ""):
+        v["이메일"] = todo("공개 이메일 주소")
+    elif email == "없음":
+        v["이메일"] = "별도 이메일 없음 — 위 연락처로 문의해 주시기 바랍니다."
+    else:
+        v["이메일"] = '<a href="mailto:%s">%s</a>' % (email, email)
+
+    wt = CO.get("개인정보_위탁업체")
+    if wt is None:
+        v["위탁"] = "<p>%s</p>" % todo("위탁 업체 유무 및 목록")
+    elif not wt:
+        v["위탁"] = ("<p>회사는 이용자의 개인정보 처리 업무를 외부에 위탁하고 있지 않습니다. "
+                     "향후 위탁이 발생하는 경우 위탁받는 자와 위탁 업무의 내용을 본 방침에 공개하고, "
+                     "필요한 경우 사전에 동의를 받겠습니다.</p>")
+    else:
+        rows = "".join("<tr><td>%s</td><td>%s</td></tr>" % (w.get("업체", ""), w.get("업무", ""))
+                       for w in wt)
+        v["위탁"] = ("<p>회사는 원활한 업무 처리를 위하여 아래와 같이 개인정보 처리 업무를 위탁하고 있으며, "
+                     "위탁계약 시 개인정보가 안전하게 관리될 수 있도록 필요한 사항을 규정하고 있습니다.</p>"
+                     "<table><tr><th>수탁업체</th><th>위탁 업무</th></tr>%s</table>" % rows)
+
+    for k, val in v.items():
+        body = body.replace("{{%s}}" % k, val)
+    return body
+
+LEGAL_CSS = """
+  .legal-lede{font-size:var(--fs-body);line-height:1.9;color:var(--muted);
+    padding-bottom:clamp(20px,2.4vw,36px);border-bottom:1px solid var(--line);
+    margin-bottom:clamp(18px,2.2vw,32px)}
+  .legal-date{margin-top:clamp(26px,3vw,48px);padding-top:clamp(16px,1.8vw,26px);
+    border-top:1px solid var(--line);font-family:var(--mono);
+    font-size:var(--fs-small);color:var(--muted)}
+  mark.todo{background:#FFF3D6;color:#8A5A00;font-weight:700;
+    padding:.14em .5em;border-radius:3px;border:1px dashed #E0B053}
+"""
+
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
          '<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;800;900'
@@ -437,6 +492,8 @@ def fix_body(f, body):
     # 법적 문서
     if f in ("privacy.html","terms.html"):
         body = body.replace("<article>", '<article class="legal">', 1)
+    if f == "privacy.html":
+        body = legal_fill(body)
     # 목업의 mono 라벨 폰트 크기 등 inline 값은 그대로 두되, 아주 작은 px 는 살짝 키움
     body = re.sub(r'font-size:1[1-3](\.\d)?px', 'font-size:var(--fs-small)', body)
     body = body.replace('font-size:14.5px','font-size:var(--fs-small)').replace('font-size:15.5px','font-size:var(--fs-body)')
@@ -486,6 +543,8 @@ for f, m in pages.items():
         page_css = HIST_CSS
     elif f == "location.html":
         page_css = LOC_CSS
+    elif f in ("privacy.html","terms.html"):
+        page_css = LEGAL_CSS
     title = f'{re.sub("<.*?>","",m["h1"])} — Verdex AI'
     (OUT/f).write_text(page_html(title, section_of(f), page_css, hero, body, extra_js), encoding="utf-8")
 
@@ -640,3 +699,8 @@ if (ROOT/"images").exists():
     shutil.copytree(ROOT/"images", OUT/"images", dirs_exist_ok=True)
 
 print(f"built {len(pages)+1} pages → {OUT}")
+if PENDING:
+    print("\n  ⚠ 회사 확인 대기 %d건 — content/company.json 에 채우세요:" % len(PENDING))
+    for _t in PENDING:
+        print("     · " + _t)
+    print("     (채우기 전에는 개인정보처리방침에 주황색 표시가 남습니다)")
