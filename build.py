@@ -92,6 +92,23 @@ def hero_band(f, m):
   </div>
 </section>'''
 
+def page_head(f, m):
+    """서브바 아래에 오는 낮은 제목 블록 (큰 히어로 대체)"""
+    top = ""
+    if m["crumb"]:     top = f'<div class="crumb">{m["crumb"]}</div>'
+    elif m["eyebrow"]: top = f'<div class="eyebrow">{m["eyebrow"]}</div>'
+    lede = f'<p class="lede">{m["lede"]}</p>' if m["lede"] else ""
+    by   = f'<div class="byline">{m["byline"]}</div>' if m["byline"] else ""
+    upd  = f'<div class="updated">{m["updated"]}</div>' if m["updated"] else ""
+    title = BAND_TITLE.get(f, re.sub("<.*?>", "", m["h1"]))
+    return f'''<section class="phead">
+  <div class="wrap">
+    {top}
+    <h1>{title}</h1>
+    {lede}{by}{upd}
+  </div>
+</section>'''
+
 def hero_subbar(f, m):
     """회사 소개 챕터: 로고 바로 밑에 붙는 섹션 탭 바 (제목·탭·브랜드 라인)"""
     return f'''<div class="subbar">
@@ -112,6 +129,9 @@ def hero_subbar(f, m):
 </div>'''
 
 SUBBAR = {"about-overview.html", "about-leadership.html", "about-history.html", "location.html"}
+# 위 띠(서브바)가 이미 말해주는 내용이라 아래 제목 블록을 두지 않는 페이지
+NO_HEAD = SUBBAR | {"business-overview.html", "news.html", "resources.html",
+                    "careers.html", "contact.html"}
 BAND_TITLE = {"about-overview.html":"개요", "business-overview.html":"개요",
               "news.html":"뉴스·보도", "resources.html":"자료실",
               "careers.html":"채용 안내", "contact.html":"문의하기"}
@@ -390,9 +410,6 @@ def fix_body(f, body):
         body = re.sub(r'src="https://maps\.google\.com/maps\?q=[^"]*"output=embed"',
                       'src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%EC%8B%9C%20%EC%84%B1%EB%8F%99%EA%B5%AC%20%EB%AC%B4%ED%95%99%EB%A1%9C6%EA%B8%B8%2050&output=embed"',
                       body)
-    # 사업분야 상세: 풀블리드 배너는 사진형 히어로가 대신함
-    if f.startswith("service-"):
-        body = re.sub(r'<div class="hero-banner">.*?</div>\s*</div>', '', body, count=1, flags=re.S)
     # 법적 문서
     if f in ("privacy.html","terms.html"):
         body = body.replace("<article>", '<article class="legal">', 1)
@@ -431,12 +448,7 @@ for f, m in pages.items():
     body = (SRC/f).read_text(encoding="utf-8")
     body = fix_body(f, body)
     bar = hero_subbar(f, m) if section_of(f) else ""
-    if f in SUBBAR:
-        hero = bar
-    elif f in PHOTO:
-        hero = bar + hero_photo(f, m)
-    else:
-        hero = bar + hero_band(f, m)
+    hero = bar if f in NO_HEAD else bar + page_head(f, m)
     if not body.lstrip().startswith("<main"):
         body = "<main>\n" + body + "\n</main>"
     extra_js = NEWS_JS if f == "news.html" else ""

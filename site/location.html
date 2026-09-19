@@ -459,10 +459,28 @@ footer.site{background:#07161C;color:rgba(255,255,255,.66);padding:clamp(48px,5v
     pointer-events:none;background:linear-gradient(90deg,rgba(10,58,99,0),var(--navy))} }
 
 /* 서브바가 앞에 붙은 히어로 — 헤더 높이만큼의 위 여백을 서브바가 이미 먹었으므로 뺀다 */
-.subbar + .phero{min-height:clamp(320px,50svh,620px)}
-.subbar + .phero .wrap{padding-top:calc(var(--u)*5)}
-.subbar + .phero .slot{top:calc(var(--u)*2)}
-.subbar + .bhero .wrap{padding-top:clamp(26px,3.2vw,58px)}
+/* 페이지 제목 블록 — 큰 다크 히어로를 대체하는 낮고 밝은 머리 */
+.phead{background:#fff;border-bottom:1px solid var(--line);
+  padding:clamp(24px,3vw,52px) 0 clamp(20px,2.5vw,42px)}
+.phead{margin-top:var(--hh)}
+.phead .wrap{max-width:var(--maxw)}
+.phead h1{margin-top:calc(var(--u)*1.4);font-size:clamp(23px,2.7vw,52px);font-weight:900;
+  line-height:1.26;letter-spacing:-.035em;color:var(--navy);max-width:26ch}
+.phead .crumb{color:var(--muted)}
+.phead .crumb a{color:var(--brand)}
+.phead .lede{margin-top:calc(var(--u)*1.6);max-width:62ch;
+  font-size:var(--fs-body);line-height:1.8;color:var(--muted)}
+.phead .byline{margin-top:calc(var(--u)*2);color:var(--muted)}
+.phead .byline .author{color:var(--navy)}
+.phead .updated{margin-top:calc(var(--u)*1.6);color:#8C9A8E}
+/* 제목 블록 다음 첫 섹션은 위 여백을 줄여 붙인다 */
+.phead + main > section:first-child,
+.phead + main > article:first-child{padding-top:clamp(30px,3.6vw,68px)}
+.subbar + main > section:first-child,
+.subbar + main > article:first-child{padding-top:clamp(32px,3.8vw,72px)}
+.phead + main > .hero-banner:first-child{margin-top:clamp(28px,3.4vw,62px);
+  max-height:min(38vh,420px)}
+.subbar + .phead{margin-top:0;border-top:0}
 
 
   .loc{padding:min(2.4vh,30px) 0;height:calc(100svh - var(--hh) - var(--sbh));
